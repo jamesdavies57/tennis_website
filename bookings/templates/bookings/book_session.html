@@ -1,0 +1,14 @@
+<h1>Confirm Booking</h1>
+
+<p>
+  Court: {{ session.court.name }}<br>
+  Time: {{ session.start_time }} – {{ session.end_time }}<br>
+  Type: {{ session.get_session_type_display }}
+</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirm Booking</button>
+</form>
+
+<a href="{% url 'session_list' %}">Cancel</a>
