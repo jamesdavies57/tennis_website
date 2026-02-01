@@ -1,9 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    PermissionsMixin,
-    BaseUserManager,
-)
+from django.contrib.auth.models import (AbstractBaseUser,PermissionsMixin,BaseUserManager,)
 from django.utils import timezone
 
 
@@ -52,10 +48,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
 
-    username = models.CharField(
-        max_length=30,
-        unique=True
-    )
+    username = models.CharField(max_length=30, unique=True)
 
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
@@ -67,7 +60,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         default="MEMBER",
     )
 
-    # Membership info (can be blank for staff)
+    #Membership info (can be blank for staff)
     membership_type = models.CharField(
         max_length=20,
         choices=MEMBERSHIP_TYPES,
@@ -82,10 +75,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
-    competitive_rank = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-    )
+    competitive_rank = models.PositiveIntegerField(null=True,blank=True,)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
