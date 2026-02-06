@@ -11,4 +11,8 @@
   <button type="submit">Confirm Booking</button>
 </form>
 
-<a href="{% url 'session_list' %}">Cancel</a>
+{% if session.session_type == "CASUAL" %}
+  <a href="{% url 'casual_sessions' %}">Cancel</a>
+{% else %}
+  <a href="{% url 'competitive_sessions' %}">Cancel</a>
+{% endif %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>My Upcoming Bookings</h1>
+
+{% for b in bookings %}
+  <div>
+    <strong>{{ b.session.court.name }}</strong><br>
+    {{ b.session.start_time }} – {{ b.session.end_time }}<br>
+
+    <form method="post" action="{% url 'cancel_my_booking' b.id %}">
+      {% csrf_token %}
+      <button type="submit">Cancel</button>
+    </form>
+  </div>
+  <hr>
+{% empty %}
+  <p>You have no upcoming bookings.</p>
+{% endfor %}
+
+{% endblock %}

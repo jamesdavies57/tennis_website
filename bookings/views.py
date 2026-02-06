@@ -1,28 +1,100 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from datetime import datetime, time
+from django.utils import timezone
+from django.db.models import Count, F, Q
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.db.models import Count
-from django.db import models
-
 from .models import Session
-from .facade import create_booking
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.views.decorators.http import require_POST
+from .models import Booking
+from .facade import cancel_booking, create_booking
+
+#split date input
+def _day_bounds(date_str):
+    #requires YYYY-MM-DD
+    date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    start = timezone.make_aware(datetime.combine(date, time.min))
+    end = timezone.make_aware(datetime.combine(date, time.max))
+
+    return start, end, date
+
 
 @login_required
-def session_list(request):
-    sessions = (
-        Session.objects.annotate(num_bookings=Count("bookings")).filter(num_bookings__lt=models.F("max_players")).order_by("start_time"))
+def casual_sessions(request):
+    date_str = request.GET.get("date")
+    #default to today if error
+    if not date_str:
+        date_str = timezone.localdate().isoformat()
 
-    return render(request, "bookings/session_list.html", {"sessions": sessions})
+    start, end, _ = _day_bounds(date_str)
+    #get available casual sessions by filtering out cancelled and full sessions 
+    get_sessions = (Session.objects.filter(court__court_type="CASUAL", is_cancelled=False, start_time__range=(start, end))
+                    .annotate(active_bookings=Count("bookings", filter=Q(bookings__cancelled_at__isnull=True)))
+                    .filter(active_bookings__lt=F("court__max_players"))
+                    .order_by("start_time"))
+
+    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "CASUAL","date": date_str,})
+
+@login_required
+def competitive_sessions(request):
+    date_str = request.GET.get("date")
+    if not date_str:
+        #default to today
+        date_str = timezone.localdate().isoformat()
+
+    start, end, _ = _day_bounds(date_str)
+    #filter for not cancelled, not full comp sessions
+    get_sessions = (Session.objects.filter(court__court_type="COMPETITIVE", is_cancelled=False, start_time__range=(start, end))
+        .annotate(active_bookings=Count("bookings", filter=Q(bookings__cancelled_at__isnull=True)))
+        .filter(active_bookings__lt=F("court__max_players"))
+        .order_by("start_time")
+    )
+
+    return render(request, "bookings/session_list.html", {
+        "sessions": get_sessions,
+        "session_type": "COMPETITIVE",
+        "date": date_str,
+    })
+
+
+@login_required
+def my_bookings(request):
+    #get all upcoming bookings for a user
+    now = timezone.now()
+    bookings = (
+        Booking.objects
+        .filter(user=request.user, cancelled_at__isnull=True, session__start_time__gte=now)
+        .select_related("session", "session__court")
+        .order_by("session__start_time")
+    )
+    return render(request, "bookings/my_bookings.html", {"bookings": bookings})
+
+@login_required
+@require_POST
+def cancel_my_booking(request, booking_id):
+    #try to find a booking by its ID, if an error is found, call a 404 page
+    booking = get_object_or_404(Booking, id=booking_id)
+    try:
+        cancel_booking(user=request.user, booking=booking)
+        messages.success(request, "Booking cancelled.")
+    except Exception as e:
+        messages.error(request, str(e))
+    return redirect("my_bookings")
 
 @login_required
 def book_session_page(request, session_id):
+    #try to find a session by its ID, if an error is found, call a 404 page
     session = get_object_or_404(Session, id=session_id)
 
     if request.method == "POST":
         try:
             create_booking(user=request.user, session=session)
             messages.success(request, "Booking successful!")
-            return redirect("session_list")
+            if session.session_type == "CASUAL":
+                return redirect("casual_sessions")
+
+            return redirect("competitive_sessions")
         except Exception as e:
             messages.error(request, str(e))
 
