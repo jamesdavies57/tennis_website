@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'bookings',
+    'home',
+    'social',
+    'staff',
 ]
 
 
@@ -73,7 +76,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'tennis_website.wsgi.application'
-
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases

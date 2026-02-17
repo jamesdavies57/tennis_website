@@ -1,7 +1,10 @@
 from django.urls import path
-from .views import casual_sessions, competitive_sessions, my_bookings, cancel_my_booking, book_session_page
+from .views import casual_sessions, competitive_sessions, my_bookings, cancel_my_booking, book_session_page, bookings_home
 
 urlpatterns = [
+
+    path("", bookings_home, name="booking"),
+
     path("casual/", casual_sessions, name="casual_sessions"),
     path("competitive/", competitive_sessions, name="competitive_sessions"),
 

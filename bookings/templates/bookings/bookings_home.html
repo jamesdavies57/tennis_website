@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Bookings | Derby Tennis{% endblock %}
+
+{% block content %}
+<h1>Bookings</h1>
+
+<div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+  <a href="{% url 'casual_sessions' %}">
+    <button type="button">Casual Booking</button>
+  </a>
+
+  {% if is_premium %}
+    <a href="{% url 'competitive_sessions' %}">
+      <button type="button">Competitive Booking</button>
+    </a>
+  {% else %}
+    <button type="button" disabled title="Premium membership required">
+      Competitive Booking (Premium only)
+    </button>
+  {% endif %}
+</div>
+
+{% if not is_premium %}
+  <p style="margin-top: 12px;">
+    Competitive bookings are available to <strong>Premium</strong> members only.
+  </p>
+{% endif %}
+{% endblock %}

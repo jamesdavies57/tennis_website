@@ -10,6 +10,17 @@ from django.views.decorators.http import require_POST
 from .models import Booking
 from .facade import cancel_booking, create_booking
 
+#booking home page
+@login_required
+def bookings_home(request):
+    user = request.user
+    is_premium = getattr(user, "membership_type", None) == "PREMIUM"
+
+    return render(request, "bookings/bookings_home.html", {
+        "is_premium": is_premium,
+    })
+
+
 #split date input
 def _day_bounds(date_str):
     #requires YYYY-MM-DD

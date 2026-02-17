@@ -1,20 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-</head>
-<body>
-    <h1>Create an account</h1>
+{% extends "base.html" %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign up</button>
-    </form>
+{% block title %}Sign Up | Derby Tennis{% endblock %}
 
-    <p>
-        Already have an account?
-        <a href="{% url 'login' %}">Log in</a>
-    </p>
-</body>
-</html>
+{% block content %}
+
+<h1>Create an account</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+</form>
+
+<p>
+    Already have an account?
+    <a href="{% url 'login' %}">Log in</a>
+</p>
+
+{% endblock %}

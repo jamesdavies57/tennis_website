@@ -1,24 +1,134 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Tennis Club</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Derby Tennis{% endblock %}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background: #1a614c;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            position: relative;
+        }
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navigation {
+            display: flex;
+            gap: 20px;
+        }
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+        /* Mobile */
+        @media (max-width: 768px) {
+            .navigation {
+                display: none;
+                flex-direction: column;
+                background: #0b3d2e;
+                position: absolute;
+                right: 0;
+                top: 60px;
+                width: 200px;
+                padding: 20px;
+            }
+            .navigation.show {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+        .content {
+            padding: 30px;
+        }
+
+    </style>
 </head>
+
 <body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">Derby Tennis</a>
+        </div>
 
-{% if messages %}
-  {% for message in messages %}
-    <p>{{ message }}</p>
-  {% endfor %}
-{% endif %}
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
 
-{% if user.is_authenticated %}
-  <p>Logged in as {{ user.email }}</p>
-{% endif %}
+        <div class="navigation" id="navigation">
 
-<hr>
+            {% if user.is_authenticated %}
 
-{% block content %}
-{% endblock %}
+                <a href="{% url 'account' %}">Account</a>
+
+                <a href="{% url 'booking' %}">Book Now</a>
+
+                <a href="{% url 'social' %}">Social</a>
+
+                {% if user.account_type == "STAFF" %}
+                    <a href="{% url 'staff' %}">Staff</a>
+                {% endif %}
+
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit"
+                          style="background:none;border:none;color:#fff;cursor:pointer;font:inherit;padding:0;">
+                    Logout
+                  </button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">Login</a>
+
+                <a href="{% url 'signup' %}">Signup</a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+    <div class="content">
+
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script>
+
+        function toggleMenu() {
+            document.getElementById("navigation").classList.toggle("show");
+        }
+
+    </script>
 
 </body>
 </html>
