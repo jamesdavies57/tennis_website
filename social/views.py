@@ -27,3 +27,15 @@ def create_post(request):
             return redirect("social_home")
     
     return render(request, "social/create_post.html")
+
+@login_required
+def create_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        new_comment_body = request.POST.get("body")
+
+        if new_comment_body:
+            Comment.objects.create(post=post,user=request.user,body=new_comment_body)
+            return redirect("social_home")
+    
+    return render(request, "social/create_comment.html")

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Social Home</h1>
+
+<a href="{% url 'create_post' %}">Create Post</a>
+
+{% for post in posts %}
+    <div>
+        <h2><a href="{% url 'view_post' post.id %}">{{ post.title }}</a></h2>
+        <p>{{ post.body }}</p>
+        <p>{{ post.post_type }} | {{ post.upload_time }}</p>
+        <p>By: {{ post.user.username }}</p>
+    </div>
+    <hr>
+{% empty %}
+    <p>No posts yet.</p>
+{% endfor %}
+
+{% endblock %}

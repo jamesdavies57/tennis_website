@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+<p>{{ post.body }}</p>
+<p>{{ post.post_type }} | {{ post.upload_time }}</p>
+<p>By: {{ post.user.username }}</p>
+
+<h2>Comments</h2>
+{% for comment in comments %}
+    <div>
+        <p>{{ comment.body }}</p>
+        <small>By {{ comment.user.username }} on {{ comment.upload_time }}</small>
+    </div>
+    <hr>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+{% if user.is_authenticated and not post.locked %}
+<form method="post" action="{% url 'create_comment' post.id %}">
+    {% csrf_token %}
+    <textarea name="body" required></textarea>
+    <button type="submit">Add Comment</button>
+</form>
+{% endif %}
+
+{% endblock %}
