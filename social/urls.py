@@ -1,6 +1,9 @@
 from django.urls import path
-from . import views
+from .views import social_home, view_post, create_post, create_comment
 
 urlpatterns = [
-    path("", views.social_view, name="social"),
+    path("", social_home, name="social_home"),
+    path("post/<int:post_id>/", view_post, name="view_post"),
+    path("post/create/", create_post, name="create_post"),
+    path("post/<int:post_id>/comment/", create_comment, name="create_comment")
 ]

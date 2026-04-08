@@ -11,7 +11,7 @@ class Court(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
     court_type = models.CharField(max_length=15, choices=COURT_TYPES, default=("CASUAL","Casual"))
-    max_players = models.PositiveSmallIntegerField(default=1)  # per session on that court
+    max_players = models.PositiveSmallIntegerField(default=1)
     is_active = models.BooleanField(default=True)
     def __str__(self):
         return self.name

@@ -11,11 +11,7 @@ class Command(BaseCommand):
         parser.add_argument("--weeks", type=int, default=4)
         parser.add_argument("--start-hour", type=int, default=9)
         parser.add_argument("--end-hour", type=int, default=21)
-        parser.add_argument(
-            "--start-date",
-            type=str,
-            help="Start date in YYYY-MM-DD format (e.g. 2026-08-01)",
-        )
+        parser.add_argument("--start-date",type=str,help="YYYY-MM-DD",)
 
     @transaction.atomic
     def handle(self, *args, **opts):
