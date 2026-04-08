@@ -13,12 +13,10 @@
 {% for session in sessions %}
   <div>
     <strong>{{ session.court.name }}</strong><br>
-    {{ session.start_time }} – {{ session.end_time }}<br>
+    {{ session.start_time }} - {{ session.end_time }}<br>
 
-    <form method="post" action="{% url 'book_session_page' session.id %}">
-      {% csrf_token %}
-      <button type="submit">Book</button>
-    </form>
+    <a href="{% url 'book_session_page' session.id %}"><button type="submit">Book now</button></a>
+    
   </div>
   <hr>
 {% empty %}

@@ -62,11 +62,7 @@ def competitive_sessions(request):
         .order_by("start_time")
     )
 
-    return render(request, "bookings/session_list.html", {
-        "sessions": get_sessions,
-        "session_type": "COMPETITIVE",
-        "date": date_str,
-    })
+    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "COMPETITIVE", "date": date_str,})
 
 
 @login_required
@@ -95,18 +91,18 @@ def cancel_my_booking(request, booking_id):
 
 @login_required
 def book_session_page(request, session_id):
-    #try to find a session by its ID, if an error is found, call a 404 page
     session = get_object_or_404(Session, id=session_id)
+    print("book_session_page method =", request.method)
 
     if request.method == "POST":
         try:
             create_booking(user=request.user, session=session)
             messages.success(request, "Booking successful!")
-            if session.session_type == "CASUAL":
-                return redirect("casual_sessions")
-
-            return redirect("competitive_sessions")
         except Exception as e:
             messages.error(request, str(e))
+
+        if session.session_type == "CASUAL":
+            return redirect("casual_sessions")
+        return redirect("competitive_sessions")
 
     return render(request, "bookings/book_session.html", {"session": session})

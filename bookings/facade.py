@@ -27,8 +27,6 @@ def create_booking(*, user, session):
 
     #competitive rules
     if session.session_type == "COMPETITIVE":
-        if user.account_type != "MEMBER":
-            raise ValidationError("Only members can join competitive sessions.")
         if user.membership_status != "ACTIVE":
             raise ValidationError("Your membership is not active.")
         if user.competitive_rank is None:
