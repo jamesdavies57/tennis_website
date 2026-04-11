@@ -14,7 +14,7 @@
   <div>
     <strong>{{ session.court.name }}</strong><br>
     {{ session.start_time }} - {{ session.end_time }}<br>
-
+    {{ session.active_bookings }} / {{ session.court.max_players }} booked <br>
     <a href="{% url 'book_session_page' session.id %}"><button type="submit">Book now</button></a>
     
   </div>

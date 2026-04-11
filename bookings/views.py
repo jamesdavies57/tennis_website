@@ -10,6 +10,9 @@ from django.views.decorators.http import require_POST
 from .models import Booking
 from .facade import cancel_booking, create_booking
 
+#variable for rank difference
+RANK_DIFFERENCE = 100
+
 #booking home page
 @login_required
 def bookings_home(request):
@@ -56,11 +59,21 @@ def competitive_sessions(request):
 
     start, end, _ = _day_bounds(date_str)
     #filter for not cancelled, not full comp sessions
-    get_sessions = (Session.objects.filter(court__court_type="COMPETITIVE", is_cancelled=False, start_time__range=(start, end))
+    get_sessions = (
+        Session.objects.filter(court__court_type="COMPETITIVE", is_cancelled=False, start_time__range=(start, end))
         .annotate(active_bookings=Count("bookings", filter=Q(bookings__cancelled_at__isnull=True)))
         .filter(active_bookings__lt=F("court__max_players"))
-        .order_by("start_time")
+        .order_by("start_time").distinct()
     )
+    #dont display sessions that have too great a rank difference
+    if getattr(request.user, "competitive_rank", None) is not None:
+        get_sessions = (get_sessions
+                        .exclude(bookings__cancelled_at__isnull=True,bookings__user__competitive_rank__lt=request.user.competitive_rank - RANK_DIFFERENCE,)
+                        .exclude(bookings__cancelled_at__isnull=True,bookings__user__competitive_rank__gt=request.user.competitive_rank + RANK_DIFFERENCE,)
+                        )
+    else:
+        #if user has no rank, dont show competitive sessions
+        get_sessions = get_sessions.none()
 
     return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "COMPETITIVE", "date": date_str,})
 
