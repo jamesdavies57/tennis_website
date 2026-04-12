@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from .models import Booking
-from .facade import cancel_booking, create_booking
+from .booking_service import cancel_booking, create_booking
 
 #variable for rank difference
 RANK_DIFFERENCE = 100

@@ -1,8 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils import timezone
-from .models import Session, Booking
-#facade to help to create bookings
+from .models import Booking
+#extra logic to help to create bookings
 
 #can be tweaked later
 RANK_DIFFERENCE = 100
@@ -33,13 +33,11 @@ def create_booking(*, user, session):
             raise ValidationError("You do not have a competitive rank.")
 
         #player ranks must be within difference
-        for b in active:
-            other = b.user
-            if other.competitive_rank is None:
-                #if player has no rank data
-                continue
-            if abs(user.competitive_rank - other.competitive_rank) > RANK_DIFFERENCE:
-                raise ValidationError("Your rank is too far from the existing players in this session.")
+        for booking in active:
+            other = booking.user
+            if other.competitive_rank is not None:
+                if abs(user.competitive_rank - other.competitive_rank) > RANK_DIFFERENCE:
+                    raise ValidationError("Your rank is too far from the existing players in this session.")
 
     #create the booking
     with transaction.atomic():

@@ -4,8 +4,17 @@
 
 <h1>Social Home</h1>
 
-<a href="{% url 'create_post' %}">Create Post</a>
+<h2>Filter Posts</h2>
 
+<a href="{% url 'social_home' %}">All</a>
+<a href="?type=NEWS">News</a>
+<a href="?type=QUESTION">Questions</a>
+<a href="?type=DISCUSSION">Discussions</a>
+<a href="?type=OTHER">Other</a><hr> 
+<h2>Create post</h2>
+<b><a href="{% url 'create_post' %}">Create Post</a></b>
+<hr>
+<h2>Recent posts</h2>
 {% for post in posts %}
     <div>
         <h2><a href="{% url 'view_post' post.id %}">{{ post.title }}</a></h2>

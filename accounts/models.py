@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser,PermissionsMixin,BaseUserManager,)
 from django.utils import timezone
+from django.conf import settings
 
 
 class AccountManager(BaseUserManager):
@@ -90,3 +91,24 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+
+class Notification(models.Model):
+    NOTIF_TYPES = (
+        ("BOOKING", "Booking"),
+        ("SOCIAL", "Social"),
+        ("ACCOUNT","Account"),
+        ("STAFF","Staff"),
+        ("ANNOUNCEMENT","Announcement"),
+        ("WARNING","Warning"),
+        ("OTHER","Other"),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notification")
+    notif_type = models.CharField(max_length=15, choices=NOTIF_TYPES, default="OTHER")
+    title = models.CharField(max_length = 50)
+    body = models.CharField(max_length = 500)
+    time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title

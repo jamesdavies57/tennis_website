@@ -5,8 +5,12 @@ from .models import Post, Comment
 
 @login_required
 def social_home(request):
-    posts = Post.objects.all().order_by("-upload_time")
-    return render(request, "social/social_home.html", {"posts": posts})
+    post_type = request.GET.get("type")
+    if post_type:
+        posts = Post.objects.filter(post_type=post_type).order_by("-upload_time")
+    else:
+        posts = Post.objects.all().order_by("-upload_time")
+    return render(request, "social/social_home.html", {"posts": posts, "current_type": post_type})
 
 @login_required
 def view_post(request, post_id):
