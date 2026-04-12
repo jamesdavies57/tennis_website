@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
-
+from accounts.models import Notification
 
 @login_required
 def social_home(request):
@@ -37,9 +37,16 @@ def create_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == "POST":
         new_comment_body = request.POST.get("body")
-
+        user = request.user
+        op = post.user
+        
         if new_comment_body:
-            Comment.objects.create(post=post,user=request.user,body=new_comment_body)
+            #create the comment
+            Comment.objects.create(post=post,user=user,body=new_comment_body)
+
+            #prepare and create notification for original poster
+            notif_text = f"{user.username} commented on your post '{post.title}': {new_comment_body}"
+            Notification.objects.create(user = op, notif_type = "SOCIAL", title = "New comment on your post", body = notif_text)
             return redirect("social_home")
     
     return render(request, "social/create_comment.html")

@@ -55,26 +55,12 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150)
 
     #Set account classification
-    account_type = models.CharField(
-        max_length=10,
-        choices=ACCOUNT_TYPES,
-        default="MEMBER",
-    )
+    account_type = models.CharField(max_length=10,choices=ACCOUNT_TYPES,default="MEMBER",)
 
     #Membership info (can be blank for staff)
-    membership_type = models.CharField(
-        max_length=20,
-        choices=MEMBERSHIP_TYPES,
-        null=True,
-        blank=True,
-    )
+    membership_type = models.CharField(max_length=20,choices=MEMBERSHIP_TYPES,null=True,blank=True,)
 
-    membership_status = models.CharField(
-        max_length=20,
-        choices=MEMBERSHIP_STATUS,
-        null=True,
-        blank=True,
-    )
+    membership_status = models.CharField(max_length=20,choices=MEMBERSHIP_STATUS,null=True,blank=True,)
 
     competitive_rank = models.PositiveIntegerField(null=True,blank=True,)
 

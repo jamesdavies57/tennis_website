@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My Notifications</h1>
+
+{% for notif in notifications %}
+    <div>
+        <h2>{{ notif.title }}</h2>
+        <p>{{ notif.body }}</p>
+        <p>{{ notif.notif_type }} | {{ notif.time }}</p>
+    </div>
+    <hr>
+{% empty %}
+    <p>No notifications yet.</p>
+{% endfor %}
+
+{% endblock %}

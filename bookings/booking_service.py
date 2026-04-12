@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils import timezone
 from .models import Booking
+from accounts.models import Notification
 #extra logic to help to create bookings
 
 #can be tweaked later
@@ -41,7 +42,11 @@ def create_booking(*, user, session):
 
     #create the booking
     with transaction.atomic():
-        booking = Booking.objects.create(user=user, session=session)
+        booking = Booking.objects.create(user = user, session=session)
+        #create the booking
+        booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
+        #create the notification
+        Notification.objects.create(user = user, notif_type = "BOOKING", title = "New booking created", body = booking_text)
 
     return booking
 
