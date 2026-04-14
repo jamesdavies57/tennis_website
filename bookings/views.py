@@ -46,6 +46,7 @@ def casual_sessions(request):
     get_sessions = (Session.objects.filter(court__court_type="CASUAL", is_cancelled=False, start_time__range=(start, end))
                     .annotate(active_bookings=Count("bookings", filter=Q(bookings__cancelled_at__isnull=True)))
                     .filter(active_bookings__lt=F("court__max_players"))
+                    .exclude(bookings__user=request.user,bookings__cancelled_at__isnull=True)
                     .order_by("start_time"))
 
     return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "CASUAL","date": date_str,})
@@ -63,6 +64,7 @@ def competitive_sessions(request):
         Session.objects.filter(court__court_type="COMPETITIVE", is_cancelled=False, start_time__range=(start, end))
         .annotate(active_bookings=Count("bookings", filter=Q(bookings__cancelled_at__isnull=True)))
         .filter(active_bookings__lt=F("court__max_players"))
+        .exclude(bookings__user=request.user,bookings__cancelled_at__isnull=True)
         .order_by("start_time").distinct()
     )
     #dont display sessions that have too great a rank difference
@@ -115,7 +117,7 @@ def book_session_page(request, session_id):
             messages.error(request, str(e))
 
         if session.session_type == "CASUAL":
-            return redirect("casual_sessions")
-        return redirect("competitive_sessions")
+            return redirect("booking:casual_sessions")
+        return redirect("booking:competitive_sessions")
 
     return render(request, "bookings/book_session.html", {"session": session})

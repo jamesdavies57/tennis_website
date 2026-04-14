@@ -3,5 +3,7 @@
 {% block content %}
 <h1>Your account</h1>
 <h2>View Notifications</h2>
-<b><a href="{% url 'notifications' %}">View Notifications</a></b>
+<b><a href="{% url 'notifications' %}">View Notifications ({{ request.user.unread_notifs }}) |</a></b>
+<b><a href="{% url 'details' %}">Account details |</a></b>
+<b><a href="{% url 'booking:mine' %}">View Bookings </a></b>
 {% endblock %}

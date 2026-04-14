@@ -9,9 +9,9 @@ class AccountAdmin(UserAdmin):
     list_display = ("email", "username", "first_name", "last_name", "account_type", "is_staff")
 
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
+        ("Account", {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("username", "first_name", "last_name")}),
-        ("Membership", {"fields": ("account_type", "membership_type", "membership_status", "competitive_rank")}),
+        ("Membership", {"fields": ("account_type", "membership_type", "membership_status", "competitive_rank", "unread_notifs")}),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         ("Important dates", {"fields": ("last_login",)}),
     )

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}My details | Derby Tennis{% endblock %}
+
+{% block content %}
+<h1>Your details</h1>
+<h2>Update your details: </h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Save changes</button>
+</form>
+
+<hr>
+
+{% if user.membership_type == "PREMIUM" %}
+    <h2>Additional Info</h2>
+    <p><strong>Competitive Rank:</strong> {{ user.competitive_rank }}</p>
+{% endif %}
+
+{% endblock %}

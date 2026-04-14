@@ -7,7 +7,10 @@ from accounts.models import Notification
 def social_home(request):
     post_type = request.GET.get("type")
     if post_type:
-        posts = Post.objects.filter(post_type=post_type).order_by("-upload_time")
+        if post_type == "MINE":
+            posts = Post.objects.filter(user=request.user).order_by("-upload_time")
+        else:
+            posts = Post.objects.filter(post_type=post_type).order_by("-upload_time")
     else:
         posts = Post.objects.all().order_by("-upload_time")
     return render(request, "social/social_home.html", {"posts": posts, "current_type": post_type})
@@ -47,6 +50,8 @@ def create_comment(request, post_id):
             #prepare and create notification for original poster
             notif_text = f"{user.username} commented on your post '{post.title}': {new_comment_body}"
             Notification.objects.create(user = op, notif_type = "SOCIAL", title = "New comment on your post", body = notif_text)
+            op.unread_notifs += 1
+            op.save()
             return redirect("social_home")
     
     return render(request, "social/create_comment.html")

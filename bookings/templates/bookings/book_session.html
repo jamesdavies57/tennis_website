@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Booking creation{% endblock %}
+{% block content %}
 <h1>Confirm Booking</h1>
 
 <p>
@@ -12,7 +15,8 @@
 </form>
 
 {% if session.session_type == "CASUAL" %}
-  <a href="{% url 'casual_sessions' %}">Cancel</a>
+  <a href="{% url 'booking:casual_sessions' %}">Cancel</a>
 {% else %}
-  <a href="{% url 'competitive_sessions' %}">Cancel</a>
+  <a href="{% url 'booking:competitive_sessions' %}">Cancel</a>
 {% endif %}
+{% endblock %}

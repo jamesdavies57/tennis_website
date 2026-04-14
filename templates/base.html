@@ -19,7 +19,7 @@
         }
 
         .navbar {
-            background: #1a614c;
+            background: #1b6650;
             color: #fff;
             display: flex;
             justify-content: space-between;
@@ -83,7 +83,7 @@
             .navigation {
                 display: none;
                 flex-direction: column;
-                background: #0b3d2e;
+                background: #0b4232;
                 position: absolute;
                 right: 0;
                 top: 60px;
@@ -122,8 +122,8 @@
         <div class="navigation" id="navigation">
             {% if user.is_authenticated %}
                 <a class="nav-item" href="{% url 'about' %}">About Us</a>
-                <a class="nav-item" href="{% url 'account' %}">Account</a>
-                <a class="nav-item" href="{% url 'booking' %}">Book Now</a>
+                <a class="nav-item" href="{% url 'account' %}">Account ({{ request.user.unread_notifs }})</a>
+                <a class="nav-item" href="{% url 'booking:booking' %}">Book Now</a>
                 <a class="nav-item" href="{% url 'social_home' %}">Social</a>
 
                 {% if user.account_type == "STAFF" %}

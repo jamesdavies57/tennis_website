@@ -47,6 +47,8 @@ def create_booking(*, user, session):
         booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
         #create the notification
         Notification.objects.create(user = user, notif_type = "BOOKING", title = "New booking created", body = booking_text)
+        user.unread_notifs += 1
+        user.save()
 
     return booking
 

@@ -60,7 +60,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     #Membership info (can be blank for staff)
     membership_type = models.CharField(max_length=20,choices=MEMBERSHIP_TYPES,null=True,blank=True,)
 
-    membership_status = models.CharField(max_length=20,choices=MEMBERSHIP_STATUS,null=True,blank=True,)
+    membership_status = models.CharField(max_length=20,choices=MEMBERSHIP_STATUS,null=True,blank=True,default="ACTIVE")
 
     competitive_rank = models.PositiveIntegerField(null=True,blank=True,)
 
@@ -68,6 +68,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     date_joined = models.DateTimeField(default=timezone.now)
+
+    unread_notifs = models.PositiveIntegerField(default=0)
 
     objects = AccountManager()
 

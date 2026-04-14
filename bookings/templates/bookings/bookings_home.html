@@ -6,12 +6,12 @@
 <h1>Bookings</h1>
 
 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
-  <a href="{% url 'casual_sessions' %}">
+  <a href="{% url 'booking:casual_sessions' %}">
     <button type="button">Casual Booking</button>
   </a>
 
   {% if is_premium %}
-    <a href="{% url 'competitive_sessions' %}">
+    <a href="{% url 'booking:competitive_sessions' %}">
       <button type="button">Competitive Booking</button>
     </a>
   {% else %}

@@ -7,7 +7,7 @@
     <strong>{{ b.session.court.name }}</strong><br>
     {{ b.session.start_time }} – {{ b.session.end_time }}<br>
 
-    <form method="post" action="{% url 'cancel_my_booking' b.id %}">
+    <form method="post" action="{% url 'booking:cancel_my_booking' b.id %}">
       {% csrf_token %}
       <button type="submit">Cancel</button>
     </form>

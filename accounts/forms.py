@@ -6,3 +6,8 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ("email", "username", "first_name", "last_name", "membership_type")
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ["username", "email"] 
