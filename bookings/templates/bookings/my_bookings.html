@@ -5,7 +5,7 @@
 {% for b in bookings %}
   <div>
     <strong>{{ b.session.court.name }}</strong><br>
-    {{ b.session.start_time }} – {{ b.session.end_time }}<br>
+    {{ b.session.start_time }} - {{ b.session.end_time }}<br>
 
     <form method="post" action="{% url 'booking:cancel_my_booking' b.id %}">
       {% csrf_token %}

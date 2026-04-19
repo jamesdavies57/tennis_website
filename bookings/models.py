@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from datetime import timedelta
+from accounts.models import Account
+from django.utils import timezone
 
 class Court(models.Model):
     COURT_TYPES = (
@@ -32,6 +34,16 @@ class Session(models.Model):
     @property
     def max_players(self):
         return self.court.max_players
+    
+    def __str__(self):
+        bookings = self.bookings.all()
+
+        if not bookings.exists():
+            players = "No players"
+        else:
+            players = ", ".join([b.user.email for b in bookings])
+
+        return f"{self.court}: {self.start_time.strftime('%d %b %Y %H:%M')} - {players}"
 
     class Meta:
         #add constraint to make sure a court cannot have multiple sessions at the same time
@@ -44,7 +56,7 @@ class Booking(models.Model):
 
     session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name="bookings")
 
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(default=timezone.now)
     cancelled_at = models.DateTimeField(null=True, blank=True)
     #is_cancelled can be called later to find if session has been cancelled 
     @property
@@ -57,3 +69,23 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.user.email}: {self.session}"
+
+class Comp_results(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name="comp_booking")
+    player1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_1")
+    player2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_2")
+
+    #results for each player in each set in the match
+    p1s1 = models.IntegerField()
+    p1s2 = models.IntegerField()
+    p1s3 = models.IntegerField(null=True, blank=True)
+
+    p2s1 = models.IntegerField()
+    p2s2 = models.IntegerField()
+    p2s3 = models.IntegerField(null=True, blank=True)
+
+    time = models.DateTimeField(default=timezone.now)
+    recorded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_recording")
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["booking"],name="one_result_per_booking")]

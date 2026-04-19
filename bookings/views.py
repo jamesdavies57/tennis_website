@@ -102,7 +102,7 @@ def cancel_my_booking(request, booking_id):
         messages.success(request, "Booking cancelled.")
     except Exception as e:
         messages.error(request, str(e))
-    return redirect("my_bookings")
+    return redirect("booking:mine")
 
 @login_required
 def book_session_page(request, session_id):
@@ -121,3 +121,5 @@ def book_session_page(request, session_id):
         return redirect("booking:competitive_sessions")
 
     return render(request, "bookings/book_session.html", {"session": session})
+
+
