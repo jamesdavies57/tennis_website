@@ -3,12 +3,61 @@
 {% block title %}Match results | Derby Tennis{% endblock %}
 
 {% block content %}
-<h1>Enter Match results</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Save changes</button>
+    {% for field in form %}
+        {% for error in field.errors %}
+            {% if error != "This field is required." %}
+                <p style="color:red">{{ error }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <br><br>
+    <!-- Session dropdown -->
+    <label>Select Match:</label>
+    <select name="session" onchange="this.form.submit()">
+        <option value="">Select a match</option>
+        {% for s in form.fields.session.queryset %}
+            <option value="{{ s.id }}"
+                {% if form.data.session == s.id|stringformat:"s" %}selected{% endif %}>
+                {{ s }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    {% if players and players|length == 2 %}
+        <h3>{{ players.0.username }} vs {{ players.1.username }}</h3>
+
+        <table border="0" cellpadding="8">
+            <tr>
+                <th></th>
+                <th>Set 1</th>
+                <th>Set 2</th>
+                <th>Set 3</th>
+            </tr>
+            <tr>
+                <td>{{ players.0.username }}</td>
+                <td>{{ form.p1s1 }}</td>
+                <td>{{ form.p1s2 }}</td>
+                <td>{{ form.p1s3 }}</td>
+            </tr>
+            <tr>
+                <td>{{ players.1.username }}</td>
+                <td>{{ form.p2s1 }}</td>
+                <td>{{ form.p2s2 }}</td>
+                <td>{{ form.p2s3 }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p><em>Select a valid match</em></p>
+    {% endif %}
+
+    <br>
+    <button type="submit" name="save_result">Save Result</button>
+
 </form>
 
 <hr>

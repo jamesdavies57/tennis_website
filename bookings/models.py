@@ -71,6 +71,9 @@ class Booking(models.Model):
         return f"{self.user.email}: {self.session}"
 
 class Comp_results(models.Model):
+
+    session = models.ForeignKey(Session,on_delete=models.CASCADE,related_name="results", null=True, blank=True)
+
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name="comp_booking")
     player1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_1")
     player2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_2")
@@ -88,4 +91,7 @@ class Comp_results(models.Model):
     recorded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_recording")
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=["booking"],name="one_result_per_booking")]
+        constraints = [models.UniqueConstraint(fields=["session"],name="one_result_per_session")]
+
+    def __str__(self):
+        return f"{self.session.court} {self.session.start_time}: {self.player1.email} vs {self.player2.email}"
