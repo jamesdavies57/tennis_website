@@ -11,7 +11,7 @@ from .models import Booking
 from .booking_service import cancel_booking, create_booking
 
 #variable for rank difference
-RANK_DIFFERENCE = 100
+RANK_DIFFERENCE = 400
 
 #booking home page
 @login_required

@@ -6,7 +6,7 @@ from accounts.models import Notification
 #extra logic to help to create bookings
 
 #can be tweaked later
-RANK_DIFFERENCE = 100
+RANK_DIFFERENCE = 400
 
 #get all bookings that arent cancelled
 def _active_bookings(session):
@@ -42,10 +42,11 @@ def create_booking(*, user, session):
 
     #create the booking
     with transaction.atomic():
-        booking = Booking.objects.create(user = user, session=session)
         #create the booking
-        booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
+        booking = Booking.objects.create(user = user, session=session)
+
         #create the notification
+        booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
         Notification.objects.create(user = user, notif_type = "BOOKING", title = "New booking created", body = booking_text)
         user.unread_notifs += 1
         user.save()
