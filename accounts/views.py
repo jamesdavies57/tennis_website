@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, UserUpdateForm
 from .models import Notification
+from bookings.models import Comp_results
+from django.db.models import Q
 
 def signup(request):
     if request.method == "POST":
@@ -37,3 +39,12 @@ def my_details(request):
         form = UserUpdateForm(instance=request.user)
 
     return render(request, "accounts/details.html", {"form": form,"user": request.user,})
+
+@login_required
+def match_history(request):
+    if request.user.membership_type != "PREMIUM":
+        return redirect("home")
+    curr_user=request.user
+    #query to get all matches of current user with no duplciates
+    matches = Comp_results.objects.filter(Q(player1=curr_user) | Q(player2=curr_user)).order_by("-time")
+    return render(request, "accounts/matches.html", {"matches": matches})

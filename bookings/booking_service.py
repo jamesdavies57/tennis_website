@@ -42,14 +42,29 @@ def create_booking(*, user, session):
 
     #create the booking
     with transaction.atomic():
-        #create the booking
+        #create the booking, check if someone has already booked session (needed for comp)
+        booking_count = session.bookings.all()
+        if booking_count.exists():
+            #get users that have already booked session
+            new_booking = False
+            users = [b.user for b in booking_count]
+            users.append(user)
+        else:
+            new_booking = True
         booking = Booking.objects.create(user = user, session=session)
 
         #create the notification
-        booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
-        Notification.objects.create(user = user, notif_type = "BOOKING", title = "New booking created", body = booking_text)
-        user.unread_notifs += 1
-        user.save()
+        if session.session_type == "COMPETITIVE" and not new_booking:
+            booking_text = f"Opponent found for competitive match {session.court.name} on {session.start_time}, match is confirmed, please attend."
+            for u in users:
+                Notification.objects.create(user = u, notif_type = "BOOKING", title = "Competitive match confirmed!", body = booking_text)
+                u.unread_notifs += 1
+                u.save()
+        else:
+            booking_text = f"You booked a session for {session.court.name} on {session.start_time}"
+            Notification.objects.create(user = user, notif_type = "BOOKING", title = "New booking created", body = booking_text)
+            user.unread_notifs += 1
+            user.save()
 
     return booking
 

@@ -90,6 +90,9 @@ class Comp_results(models.Model):
     time = models.DateTimeField(default=timezone.now)
     recorded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_recording")
 
+    p1_elo_change = models.IntegerField(null=True, blank=True)
+    p2_elo_change = models.IntegerField(null=True, blank=True)
+
     class Meta:
         constraints = [models.UniqueConstraint(fields=["session"],name="one_result_per_session")]
 
@@ -98,6 +101,8 @@ class Comp_results(models.Model):
     
 
     #calculate rank updates based on elo
+    
+    #only update ranks the first time the match is recorded, edge case protection
     def save(self, *args, **kwargs):
         is_new = self.pk is None
 
@@ -106,6 +111,28 @@ class Comp_results(models.Model):
         if is_new:
             self.update_ranks()
 
+    #function to use in the webpage to return the winner
+    def get_winner(self):
+        p1_sets = 0
+        p2_sets = 0
+
+        sets = [
+            (self.p1s1, self.p2s1),
+            (self.p1s2, self.p2s2),
+            (self.p1s3, self.p2s3),
+        ]
+
+        for s1, s2 in sets:
+            if s1 is None or s2 is None:
+                continue
+            if s1 > s2:
+                p1_sets += 1
+            elif s2 > s1:
+                p2_sets += 1
+
+        return p1_sets, p2_sets
+
+    #calculate elo and update
     def update_ranks(self):
         #elo K value
         K = 32
@@ -118,20 +145,8 @@ class Comp_results(models.Model):
         r2 = p2.competitive_rank
 
         #determine winner
-        p1_sets = 0
-        p2_sets = 0
-        sets = [
-            (self.p1s1, self.p2s1),
-            (self.p1s2, self.p2s2),
-            (self.p1s3, self.p2s3),
-        ]
-        for s1, s2 in sets:
-            if s1 is None or s2 is None:
-                continue
-            if s1 > s2:
-                p1_sets += 1
-            elif s2 > s1:
-                p2_sets += 1
+        p1_sets, p2_sets = self.get_winner()
+        
 
         if p1_sets == p2_sets:
             return  # no change for draw
@@ -150,7 +165,13 @@ class Comp_results(models.Model):
         new_r1 = r1 + K * (S1 - E1)
         new_r2 = r2 + K * (S2 - E2)
 
-        #assign ratings
+        self.p1_elo_change = round(new_r1-r1)
+        self.p2_elo_change = round(new_r2-r2)
+
+        #save the elo changes only
+        self.save(update_fields=["p1_elo_change", "p2_elo_change"])
+
+        # update players
         p1.competitive_rank = round(new_r1)
         p2.competitive_rank = round(new_r2)
 

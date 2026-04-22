@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My Match History</h1>
+<hr>
+{% for match in matches %}
+    <div>
+        <h3>{{ match.session.court }} - {{ match.session.start_time }}</h3>
+        <h3>{{ match.player1.username }} vs {{ match.player2.username }}</h3>
+
+        <table border="0" cellpadding="8">
+            <tr>
+                <th></th>
+                <th>Set 1</th>
+                <th>Set 2</th>
+                <th>Set 3</th>
+            </tr>
+            <tr>
+                <td>{{ match.player1.username }}</td>
+                <td>{{ match.p1s1 }}</td>
+                <td>{{ match.p1s2 }}</td>
+                <td>{{ match.p1s3 }}</td>
+            </tr>
+            <tr>
+                <td>{{ match.player2.username }}</td>
+                <td>{{ match.p2s1 }}</td>
+                <td>{{ match.p2s2 }}</td>
+                <td>{{ match.p2s3 }}</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    {% if match.player1 == request.user %}
+        {% with sets=match.get_winner %}
+            {% if sets.0 > sets.1 %}
+                <p>You won</p>
+            {% elif sets.1 > sets.0 %}
+                <p>You lost</p>
+            {% else %}
+                <p>You drew</p>
+            {% endif %}
+        {% endwith %}
+        Rank Change: {{ match.p1_elo_change }}</p>
+    {% endif %}
+
+
+    {% if match.player2 == request.user %}
+        {% with sets=match.get_winner %}
+            {% if sets.1 > sets.0 %}
+                <p>You won</p>
+            {% elif sets.0 > sets.1 %}
+                <p>You lost</p>
+            {% else %}
+                <p>You drew</p>
+            {% endif %}
+        {% endwith %}
+        Rank Change: {{ match.p2_elo_change }}</p>
+    {% endif %}
+
+    <hr>
+{% empty %}
+    <p>No Matches yet.</p>
+{% endfor %}
+
+{% endblock %}

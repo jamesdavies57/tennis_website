@@ -10,4 +10,5 @@ urlpatterns = [
     path("account/", views.account, name="account"),
     path("notifications/", views.notifications, name="notifications"),
     path("details/", views.my_details, name="details"),
+    path("matches/", views.match_history, name="matches"),
 ]
