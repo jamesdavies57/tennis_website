@@ -52,6 +52,22 @@ def create_comment(request, post_id):
             Notification.objects.create(user = op, notif_type = "SOCIAL", title = "New comment on your post", body = notif_text)
             op.unread_notifs += 1
             op.save()
-            return redirect("social_home")
+            return redirect("view_post", post_id=post_id)
     
     return render(request, "social/create_comment.html")
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        if request.user.account_type == "STAFF" or post.user == request.user:
+                post.delete()
+    return redirect("social_home")
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == "POST":
+        if request.user.account_type == "STAFF" or comment.user == request.user:
+                comment.delete()
+    return redirect("view_post", post_id=comment.post.id)

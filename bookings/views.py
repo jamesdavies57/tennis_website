@@ -83,10 +83,10 @@ def competitive_sessions(request):
 @login_required
 def my_bookings(request):
     #get all upcoming bookings for a user
-    now = timezone.now()
+
     bookings = (
         Booking.objects
-        .filter(user=request.user, cancelled_at__isnull=True, session__start_time__gte=now)
+        .filter(user=request.user, cancelled_at__isnull=True, session__start_time__gte=timezone.now())
         .select_related("session", "session__court")
         .order_by("session__start_time")
     )

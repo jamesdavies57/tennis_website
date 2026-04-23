@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}User management | Derby Tennis{% endblock %}
+
+{% block content %}
+
+{% for member in members %}
+  <div>
+    <strong>{{ member.email }}</strong><br>
+    Username: {{ member.username }}<br>
+    Name: {{ member.first_name }} {{ member.last_name }}<br>
+    Membership type: {{ member.membership_type }}<br>
+    <a href="{% url 'manage_a_user' member.id %}"><button type="submit">Manage</button></a>
+    
+  </div>
+  <hr>
+{% empty %}
+  <p>No members.</p>
+{% endfor %}
+
+{% endblock %}

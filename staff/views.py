@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CompForm
 from bookings.models import Session
+from accounts.models import Account, Notification
 
 @login_required
 def staff_view(request):
@@ -45,3 +46,37 @@ def comp_results(request):
         form = CompForm()
 
     return render(request, "staff/comp_results.html", {"form": form,"players": players})
+
+@login_required
+def user_management(request):
+    if request.user.account_type != "STAFF":
+        return redirect("home")
+    members = (Account.objects.filter(account_type = "MEMBER"))
+    return render(request, "staff/user_management.html", {"members": members})
+
+@login_required
+def manage_a_user(request, user_id):
+    if request.user.account_type != "STAFF":
+        return redirect("home")
+    
+    member = get_object_or_404(Account, id=user_id)
+    warnings = (Notification.objects.filter(user=member.id, notif_type = "WARNING"))
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "warn":
+            warning_text = request.POST.get("warning_text", "").strip()
+
+            if warning_text:
+                Notification.objects.create(user=member,notif_type="WARNING",title="Warning from staff",body=warning_text)
+                member.unread_notifs += 1
+                member.save()
+
+        elif action == "ban":
+            member.is_active = False
+            member.membership_status = "CANCELLED"
+            member.save()
+
+        return redirect("manage_a_user", user_id=member.id)
+
+    return render(request, "staff/manage_a_user.html", {"member": member, "warnings": warnings})

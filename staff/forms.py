@@ -1,11 +1,12 @@
 from django import forms
 from bookings.models import Comp_results, Session
-
+from django.utils import timezone
 class CompForm(forms.ModelForm):
     session = forms.ModelChoiceField(
         queryset=Session.objects.filter(
             court__court_type="COMPETITIVE",
-            is_cancelled=False
+            is_cancelled=False,
+            start_time__gte=timezone.now()
         ),
         label="Match (Date & Time)"
     )

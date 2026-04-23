@@ -62,7 +62,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     membership_status = models.CharField(max_length=20,choices=MEMBERSHIP_STATUS,null=True,blank=True,default="ACTIVE")
 
-    competitive_rank = models.PositiveIntegerField(null=True,blank=True,)
+    competitive_rank = models.PositiveIntegerField(null=True,blank=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -85,7 +85,6 @@ class Notification(models.Model):
     NOTIF_TYPES = (
         ("BOOKING", "Booking"),
         ("SOCIAL", "Social"),
-        ("ACCOUNT","Account"),
         ("STAFF","Staff"),
         ("ANNOUNCEMENT","Announcement"),
         ("WARNING","Warning"),
