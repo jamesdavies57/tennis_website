@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Staff management | Derby Tennis{% endblock %}
+
+{% block content %}
+{% if user.is_superuser %}
+  {% for member in members %}
+    <div>
+      <strong>{{ member.email }}</strong><br>
+      Username: {{ member.username }}<br>
+      Name: {{ member.first_name }} {{ member.last_name }}<br>
+      Join date: {{member.date_joined}}<br>
+      <a href="{% url 'manage_a_staff' member.id %}"><button type="submit">Manage</button></a>
+    </div>
+    <hr>
+  {% empty %}
+    <p>No staff.</p>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

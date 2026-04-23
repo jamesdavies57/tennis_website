@@ -10,6 +10,7 @@
     Username: {{ member.username }}<br>
     Name: {{ member.first_name }} {{ member.last_name }}<br>
     Membership type: {{ member.membership_type }}<br>
+    Join date: {{member.date_joined}}<br>
     <a href="{% url 'manage_a_user' member.id %}"><button type="submit">Manage</button></a>
     
   </div>

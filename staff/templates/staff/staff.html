@@ -5,5 +5,9 @@
 <h1>Temp Staff Page</h1>
 <b><a href="{% url 'comp_results' %}">Create Result</a></b>
 <b><a href="{% url 'user_management' %}">Manage Users</a></b>
-
+<b><a href="{% url 'announcements' %}">Make Announcement</a></b>
+{% if user.is_superuser %}
+    <b><a href="{% url 'staff_signup' %}">Add new staff member</a></b>
+    <b><a href="{% url 'staff_management' %}">Manage Staff</a></b>
+{% endif %}
 {% endblock %}

@@ -1,6 +1,9 @@
 from django import forms
 from bookings.models import Comp_results, Session
+from accounts.models import Account
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+
 class CompForm(forms.ModelForm):
     session = forms.ModelChoiceField(
         queryset=Session.objects.filter(
@@ -26,3 +29,21 @@ class CompForm(forms.ModelForm):
                 raise forms.ValidationError("A result already exists for this session.")
 
             return session
+    
+class StaffCreationForm(UserCreationForm):
+    class Meta:
+        model = Account
+        fields = ("email", "username", "first_name", "last_name")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.competitive_rank = 1000
+        user.membership_type = "PREMIUM"
+        user.account_type = "STAFF"
+        user.is_staff = True
+        user.is_superuser = False
+
+        if commit:
+            user.save()
+
+        return user

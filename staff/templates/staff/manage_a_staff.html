@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Staff management | Derby Tennis{% endblock %}
+
+{% block content %}
+
+<h1>Manage {{ member.username }}</h1>
+
+<p>Email: {{ member.email }}</p>
+<p>Account type: {{ member.account_type }}</p>
+<p>Active: {{ member.is_active }}</p>
+
+<h2>Send Warning</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="warn">
+    <textarea name="warning_text" placeholder="Enter warning"></textarea>
+    <button type="submit">Send Warning</button>
+</form>
+
+<h2>Ban User</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="ban">
+    <button type="submit" onclick="return confirm('Remove this staff member?');">Remove staff member</button>
+</form>
+
+{% for warning in warnings %}
+  <div>
+    <strong>{{ warning.title }} - {{ warning.time }}</strong><br>
+    {{ warning.body }}<br>
+  </div>
+  <hr>
+{% empty %}
+  <p>No previous warnings for this staff member.</p>
+{% endfor %}
+
+{% endblock %}

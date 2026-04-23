@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ("email", "username", "first_name", "last_name", "membership_type")
 
     def save(self, commit=True):
-        #if user makes a premium account, set their rank to 100 to start
+        #if user makes a premium account, set their rank to 1000 to start
         user = super().save(commit=False)
 
         if user.membership_type == "PREMIUM":

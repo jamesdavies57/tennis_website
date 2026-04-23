@@ -70,6 +70,20 @@
         .nav-item:active {
             transform: translateY(1px);
         }
+
+
+        .navigation form {
+            display: flex;
+            margin: 0;
+        }
+
+        .navigation button.nav-item {
+            font-family: inherit;
+            font-size: inherit;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
         /* mobile hamburger icon */
         .hamburger {
             display: none;
@@ -130,7 +144,7 @@
                     <a class="nav-item" href="{% url 'staff' %}">Staff</a>
                 {% endif %}
 
-                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button type="submit" class="nav-item">Logout</button>
                 </form>

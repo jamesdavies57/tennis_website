@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Create Announcement | Derby Tennis{% endblock %}
+
+{% block content %}
+
+<h1>Create Post</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <label for="notif_title">Announcement title:</label>
+    <input type="text" name="notif_title" id="notif_title" required>
+
+    <label for="notif_text">Body:</label>
+    <textarea name="notif_text" id="notif_text" required></textarea>
+
+    <label for="announcement_type">Announcement Type:</label>
+    <select name="announcement_type" id="announcement_type">
+        <option value="ALL">All members</option>
+        <option value="PREMIUM">Premium members</option>
+        <option value="STAFF">Staff</option>
+    </select>
+
+    <button type="submit">Create Announcement</button>
+</form>
+
+{% endblock %}
+
