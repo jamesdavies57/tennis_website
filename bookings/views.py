@@ -7,7 +7,7 @@ from .models import Session
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from .models import Booking
+from .models import Booking, Court
 from .booking_service import cancel_booking, create_booking
 
 #variable for rank difference
@@ -48,11 +48,14 @@ def casual_sessions(request):
                     .filter(active_bookings__lt=F("court__max_players"))
                     .exclude(bookings__user=request.user,bookings__cancelled_at__isnull=True)
                     .order_by("start_time"))
+    courts = Court.objects.filter(court_type="CASUAL").order_by("name")
 
-    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "CASUAL","date": date_str,})
+    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "Casual","date": date_str,"courts": courts})
 
 @login_required
 def competitive_sessions(request):
+    if request.user.membership_type == "CASUAL":
+        return redirect("booking:booking")
     date_str = request.GET.get("date")
     if not date_str:
         #default to today
@@ -76,8 +79,9 @@ def competitive_sessions(request):
     else:
         #if user has no rank, dont show competitive sessions
         get_sessions = get_sessions.none()
+    courts = Court.objects.filter(court_type="COMPETITIVE").order_by("name")
 
-    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "COMPETITIVE", "date": date_str,})
+    return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "Competitive", "date": date_str,"courts": courts})
 
 
 @login_required
@@ -89,6 +93,7 @@ def my_bookings(request):
         .filter(user=request.user, cancelled_at__isnull=True, session__start_time__gte=timezone.now())
         .select_related("session", "session__court")
         .order_by("session__start_time")
+        .annotate(session_booking_count=Count("session__bookings",filter=Q(session__bookings__cancelled_at__isnull=True)))
     )
     return render(request, "bookings/my_bookings.html", {"bookings": bookings})
 
@@ -107,12 +112,11 @@ def cancel_my_booking(request, booking_id):
 @login_required
 def book_session_page(request, session_id):
     session = get_object_or_404(Session, id=session_id)
-    print("book_session_page method =", request.method)
-
+    if session.session_type == "COMPETITIVE" and request.user.membership_type == "CASUAL":
+        return redirect("booking:booking")
     if request.method == "POST":
         try:
             create_booking(user=request.user, session=session)
-            messages.success(request, "Booking successful!")
         except Exception as e:
             messages.error(request, str(e))
 

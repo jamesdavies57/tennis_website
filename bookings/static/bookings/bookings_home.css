@@ -1,0 +1,79 @@
+/* === BOOKINGS PAGE === */
+
+.bookings-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.bookings-inner {
+  width: min(800px, 100%);
+  text-align: center;
+}
+
+/* Title */
+.bookings-inner h1 {
+  font-size: clamp(26px, 3vw, 36px);
+  margin-bottom: 18px;
+}
+
+/* Button grid */
+.bookings-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Booking cards */
+.booking-card {
+  min-width: 220px;
+  flex: 1 1 260px;
+  max-width: 320px;
+
+  padding: 20px;
+  border-radius: 16px;
+  background: #fff;
+
+  border: 2px solid #1a614c;
+  text-align: center;
+
+}
+
+
+
+/* Disabled state */
+.booking-card.disabled {
+  opacity: 0.5;
+  border-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Buttons */
+.booking-btn {
+  display: inline-block;
+  margin-top: 12px;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.08s ease, box-shadow 0.15s ease;
+}
+
+.booking-btn:hover {
+  opacity: 0.92;
+}
+
+/* Info text */
+.booking-info {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #333;
+}

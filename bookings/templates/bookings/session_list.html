@@ -1,25 +1,57 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ session_type }} Sessions | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'bookings/session_list.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>{{ session_type }} Sessions</h1>
 
-<form method="get">
-  <label>Date:</label>
-  <input type="date" name="date" value="{{ date }}">
-  <button type="submit">Show</button>
-</form>
+<div class="sessions-wrapper">
+  <div class="sessions-inner">
+    <h1>{{session_type}} Sessions</h1>
 
-<hr>
+    <a href="{% url 'booking:booking' %}" class="back-btn">
+      <- Back to Bookings
+    </a>
+    <form method="get" class="session-filter">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" value="{{ date }}">
+      <button type="submit">Show</button>
+    </form>
 
-{% for session in sessions %}
-  <div>
-    <strong>{{ session.court.name }}</strong><br>
-    {{ session.start_time }} - {{ session.end_time }}<br>
-    {{ session.active_bookings }} / {{ session.court.max_players }} booked <br>
-    <a href="{% url 'booking:book_session_page' session.id %}"><button type="submit">Book now</button></a>
-    
+        <div class="sessions-grid">
+      {% for court in courts %}
+        <div class="court-column">
+          <h2>{{ court.name }}</h2>
+
+          {% for session in sessions %}
+            {% if session.court == court %}
+              <div class="session-card">
+                
+
+                {{ session.start_time|time:"H:i" }} - {{ session.end_time|time:"H:i" }}<br>
+
+                {{ session.active_bookings }} / {{ session.court.max_players }} booked<br>
+
+                <a href="{% url 'booking:book_session_page' session.id %}" class="booking-btn">
+                  Book now
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% empty %}
+        <p class="empty-sessions">No courts available.</p>
+      {% endfor %}
+    </div>
+
+    {% if not sessions %}
+      <p class="empty-sessions">No available sessions for that date.</p>
+    {% endif %}
   </div>
-  <hr>
-{% empty %}
-  <p>No available sessions for that date.</p>
-{% endfor %}
+</div>
+
 {% endblock %}

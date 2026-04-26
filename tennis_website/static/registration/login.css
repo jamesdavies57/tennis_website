@@ -1,0 +1,157 @@
+/* Login container */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 12px;
+}
+
+.login-card {
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+/* Title */
+.login-card h1 {
+  font-size: clamp(24px, 3vw, 32px);
+  margin-bottom: 16px;
+  color: #000;
+}
+
+/* Form styling */
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Inputs */
+.login-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 14px;
+  transition: border 0.15s ease;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+/* Button (reuses your style vibe) */
+.login-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+}
+
+.login-btn:hover {
+  opacity: 0.92;
+}
+
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+/* Signup link */
+.login-extra {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.login-extra a {
+  color: #1a614c;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* === SIGNUP PAGE === */
+
+/* reuse login wrapper + card */
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 12px;
+}
+
+.signup-card {
+  width: min(460px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+/* Title */
+.signup-card h1 {
+  font-size: clamp(24px, 3vw, 32px);
+  margin-bottom: 16px;
+  color: #000;
+}
+
+/* Form layout */
+.signup-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Inputs */
+.signup-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 14px;
+  transition: border 0.15s ease;
+}
+
+.signup-card input:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+/* Button */
+.signup-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+}
+
+.signup-btn:hover {
+  opacity: 0.92;
+}
+
+.signup-btn:active {
+  transform: translateY(1px);
+}
+
+/* Bottom link */
+.signup-extra {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.signup-extra a {
+  color: #1a614c;
+  font-weight: 600;
+  text-decoration: none;
+}

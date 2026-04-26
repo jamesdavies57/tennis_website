@@ -1,20 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Bookings | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'bookings/my_bookings.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>My Upcoming Bookings</h1>
 
-{% for b in bookings %}
-  <div>
-    <strong>{{ b.session.court.name }}</strong><br>
-    {{ b.session.start_time }} - {{ b.session.end_time }}<br>
+<div class="my-bookings-wrapper">
+  <div class="my-bookings-inner">
+    <h1>My Upcoming Bookings</h1>
 
-    <form method="post" action="{% url 'booking:cancel_my_booking' b.id %}">
-      {% csrf_token %}
-      <button type="submit">Cancel</button>
-    </form>
+    {% for b in bookings %}
+      <div class="my-booking-card">
+        <div class="my-booking-details">
+          <h3>{{ b.session.court.name }}</h3>
+          <p>{{ b.session.start_time }} - {{ b.session.end_time }}</p>
+          {%if b.session.session_type == "COMPETITIVE" %}
+            <p>Competitive session</p>
+            <p>{{ b.session_booking_count }} / {{b.session.max_players}} players booked
+          {% else %}
+            <p>Casual session</p>
+          {% endif %}
+        </div>
+
+        <form method="post" action="{% url 'booking:cancel_my_booking' b.id %}">
+          {% csrf_token %}
+          <button type="submit" class="cancel-booking-btn" onclick="return confirm('Cancel this session?');">
+            Cancel
+          </button>
+        </form>
+      </div>
+    {% empty %}
+      <div class="empty-bookings">
+        <p>You have no upcoming bookings.</p>
+      </div>
+    {% endfor %}
   </div>
-  <hr>
-{% empty %}
-  <p>You have no upcoming bookings.</p>
-{% endfor %}
+</div>
 
 {% endblock %}

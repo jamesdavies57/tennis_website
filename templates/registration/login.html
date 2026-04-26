@@ -1,22 +1,32 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Login | Derby Tennis{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'auth/auth.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<h1>Login</h1>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h1>Login</h1>
 
-<form method="post">
-    {% csrf_token %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
 
-    {{ form.as_p }}
+      <button type="submit" class="login-btn">Log in</button>
+    </form>
 
-    <button type="submit">Log in</button>
-</form>
-
-<p>
-    Don't have an account?
-    <a href="{% url 'signup' %}">Sign up</a>
-</p>
+    <div class="login-extra">
+      <p>
+        Don't have an account?
+        <a href="{% url 'signup' %}">Sign up</a>
+      </p>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

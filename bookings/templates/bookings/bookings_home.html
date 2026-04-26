@@ -1,29 +1,57 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Bookings | Derby Tennis{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'bookings/bookings_home.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>Bookings</h1>
 
-<div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
-  <a href="{% url 'booking:casual_sessions' %}">
-    <button type="button">Casual Booking</button>
-  </a>
+<div class="bookings-wrapper">
+  <div class="bookings-inner">
+    <h1>Bookings</h1>
 
-  {% if is_premium %}
-    <a href="{% url 'booking:competitive_sessions' %}">
-      <button type="button">Competitive Booking</button>
-    </a>
-  {% else %}
-    <button type="button" disabled title="Premium membership required">
-      Competitive Booking (Premium only)
-    </button>
-  {% endif %}
+    <div class="bookings-actions">
+
+      <!-- Casual -->
+      <div class="booking-card">
+        <h3>Casual Booking</h3>
+        <p>Book a court for casual play.</p><br>
+
+        <a href="{% url 'booking:casual_sessions' %}" class="booking-btn">
+          Book Now
+        </a>
+      </div>
+
+      <!-- Competitive -->
+      {% if is_premium %}
+        <div class="booking-card">
+          <h3>Competitive Booking</h3>
+          <p>Join competitive matches and play similarly-ranked players.</p>
+
+          <a href="{% url 'booking:competitive_sessions' %}" class="booking-btn">
+            Book Now
+          </a>
+        </div>
+      {% else %}
+        <div class="booking-card disabled" title="Premium membership required">
+          <h3>Competitive Booking</h3>
+          <p>Premium membership required.</p>
+
+          <span class="booking-btn">Unavailable</span>
+        </div>
+      {% endif %}
+
+    </div>
+
+    {% if not is_premium %}
+      <p class="booking-info">
+        Competitive bookings are available to <strong>Premium</strong> members only.
+      </p>
+    {% endif %}
+  </div>
 </div>
 
-{% if not is_premium %}
-  <p style="margin-top: 12px;">
-    Competitive bookings are available to <strong>Premium</strong> members only.
-  </p>
-{% endif %}
 {% endblock %}

@@ -4,139 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Derby Tennis{% endblock %}</title>
-    
-    <style>
-        /* CSS styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: Arial, sans-serif;
-        }
+    <link rel="stylesheet" href="{% static 'base/base.css' %}">
 
-        .navbar {
-            background: #1b6650;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            position: relative;
-
-            border-bottom: 6px solid #0b3d2e;
-        }
-        /* logo attributes */
-        .logo a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 36px;
-            font-weight: bold;
-            font-style: italic;
-        }
-        /* navigation buttons*/
-        .navigation {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .nav-item {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 10px 14px;
-            border-radius: 12px; 
-
-            background: rgba(255, 255, 255, 0.12); 
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            text-decoration: none;
-        }
-
-        .nav-item:active {
-            transform: translateY(1px);
-        }
-
-
-        .navigation form {
-            display: flex;
-            margin: 0;
-        }
-
-        .navigation button.nav-item {
-            font-family: inherit;
-            font-size: inherit;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        /* mobile hamburger icon */
-        .hamburger {
-            display: none;
-            font-size: 26px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Mobile view */
-        @media (max-width: 768px) {
-            .navigation {
-                display: none;
-                flex-direction: column;
-                background: #0b4232;
-                position: absolute;
-                right: 0;
-                top: 60px;
-                width: 220px;
-                padding: 16px;
-                gap: 10px;
-            }
-            .navigation.show {
-                display: flex;
-            }
-
-            .nav-item {
-                width: 100%;
-                justify-content: flex-start;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-
-        .content {
-            padding: 30px;
-        }
-    </style>
+    {% block extra_css %}{% endblock %}
 </head>
-<!-- Page logic -->
+
 <body>
     <nav class="navbar">
         <div class="logo">
             <a href="{% url 'home' %}">Derby Tennis</a>
         </div>
-        
+
         <div class="hamburger" onclick="toggleMenu()">☰</div>
 
         <div class="navigation" id="navigation">
             {% if user.is_authenticated %}
                 <a class="nav-item" href="{% url 'about' %}">About Us</a>
-                <a class="nav-item" href="{% url 'account' %}">Account ({{ request.user.unread_notifs }})</a>
+                <a class="nav-item" href="{% url 'account' %}">
+                    Account ({{ request.user.unread_notifs }})
+                </a>
                 <a class="nav-item" href="{% url 'booking:booking' %}">Book Now</a>
                 <a class="nav-item" href="{% url 'social_home' %}">Social</a>
 
@@ -148,24 +37,24 @@
                     {% csrf_token %}
                     <button type="submit" class="nav-item">Logout</button>
                 </form>
-
             {% else %}
                 <a class="nav-item" href="{% url 'about' %}">About Us</a>
                 <a class="nav-item" href="{% url 'login' %}">Log In</a>
                 <a class="nav-item" href="{% url 'signup' %}">Signup</a>
-
             {% endif %}
         </div>
     </nav>
-    <!-- Allow page content below -->
+
     <div class="content">
         {% block content %}{% endblock %}
     </div>
-    <!-- Function for mobile menu -->
+
     <script>
         function toggleMenu() {
             document.getElementById("navigation").classList.toggle("show");
         }
     </script>
+
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

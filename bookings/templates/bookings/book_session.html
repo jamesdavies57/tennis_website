@@ -1,22 +1,47 @@
 {% extends "base.html" %}
-{% block title %}Booking creation{% endblock %}
+{% load static %}
+
+{% block title %}Confirm Booking | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'bookings/book_session.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>Confirm Booking</h1>
 
-<p>
-  Court: {{ session.court.name }}<br>
-  Time: {{ session.start_time }} - {{ session.end_time }}<br>
-  Type: {{ session.get_session_type_display }}
-</p>
+<div class="confirm-wrapper">
+  <div class="confirm-card">
 
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Confirm Booking</button>
-</form>
+    <h1>Confirm Booking</h1>
 
-{% if session.session_type == "CASUAL" %}
-  <a href="{% url 'booking:casual_sessions' %}">Cancel</a>
-{% else %}
-  <a href="{% url 'booking:competitive_sessions' %}">Cancel</a>
-{% endif %}
+    <div class="confirm-details">
+      <p><strong>Court:</strong> {{ session.court.name }}</p>
+      <p><strong>Date:</strong> {{ session.start_time|date }}</p>
+      <p>
+        <strong>Time:</strong>
+        {{ session.start_time|time:"H:i" }} - {{ session.end_time|time:"H:i" }}
+      </p>
+      <p><strong>Type:</strong> {{ session.court.get_court_type_display }} Session</p>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="confirm-btn"onclick="return confirm('Book this session?');">
+        Confirm Booking
+      </button>
+    </form>
+
+    {% if session.session_type == "CASUAL" %}
+      <a href="{% url 'booking:casual_sessions' %}?date={{ session.start_time|date:'Y-m-d' }}" class="cancel-link">
+        Cancel
+      </a>
+    {% else %}
+      <a href="{% url 'booking:competitive_sessions' %}?date={{ session.start_time|date:'Y-m-d' }}" class="cancel-link">
+        Cancel
+      </a>
+    {% endif %}
+
+  </div>
+</div>
+
 {% endblock %}
