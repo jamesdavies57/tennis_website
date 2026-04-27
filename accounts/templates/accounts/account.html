@@ -1,10 +1,49 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Account | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/account.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>Your account</h1>
-<h2>View Notifications</h2>
-<b><a href="{% url 'notifications' %}">View Notifications ({{ request.user.unread_notifs }}) |</a></b>
-<b><a href="{% url 'details' %}">Account details |</a></b>
-<b><a href="{% url 'booking:mine' %}">View Bookings </a></b>
-<b><a href="{% url 'matches' %}">View Match History </a></b>
+
+<div class="account-wrapper">
+  <div class="account-inner">
+
+    <h1>Your Account</h1>
+
+    <div class="account-grid">
+
+      <a href="{% url 'notifications' %}" class="account-card">
+        <h3>Notifications</h3>
+        <p>
+          View updates and alerts
+          {% if request.user.unread_notifs > 0 %}
+            <span class="notif-badge">{{ request.user.unread_notifs }}</span>
+          {% endif %}
+        </p>
+      </a>
+
+      <a href="{% url 'details' %}" class="account-card">
+        <h3>Account Details</h3>
+        <p>View and edit your personal info</p>
+      </a>
+
+      <a href="{% url 'booking:mine' %}" class="account-card">
+        <h3>My Bookings</h3>
+        <p>See your upcoming sessions</p>
+      </a>
+
+      <a href="{% url 'matches' %}" class="account-card">
+        <h3>Match History</h3>
+        <p>View past matches and results</p>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
 {% endblock %}

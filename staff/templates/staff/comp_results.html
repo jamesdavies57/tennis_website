@@ -1,65 +1,88 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Match results | Derby Tennis{% endblock %}
+{% block title %}Match Results | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/comp_results.css' %}">
+{% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
 
-    {% for field in form %}
+<div class="results-wrapper">
+  <div class="results-card">
+
+    <a href="{% url 'staff' %}" class="staff-back-btn">
+      <- Go Back
+    </a>
+
+    <h1>Match Results</h1>
+
+    <form method="post" class="results-form">
+      {% csrf_token %}
+
+      {% for field in form %}
         {% for error in field.errors %}
-            {% if error != "This field is required." %}
-                <p style="color:red">{{ error }}</p>
-            {% endif %}
+          {% if error != "This field is required." %}
+            <p class="form-error">{{ error }}</p>
+          {% endif %}
         {% endfor %}
-    {% endfor %}
-    <br><br>
-    <!-- Session dropdown -->
-    <label>Select Match:</label>
-    <select name="session" onchange="this.form.submit()">
+      {% endfor %}
+
+      <label for="id_session">Select Match</label>
+      <select name="session" id="id_session" onchange="this.form.submit()">
         <option value="">Select a match</option>
         {% for s in form.fields.session.queryset %}
-            <option value="{{ s.id }}"
-                {% if form.data.session == s.id|stringformat:"s" %}selected{% endif %}>
-                {{ s }}
-            </option>
+          <option value="{{ s.id }}"
+            {% if form.data.session == s.id|stringformat:"s" %}selected{% endif %}>
+            {{ s }}
+          </option>
         {% endfor %}
-    </select>
+      </select>
 
-    <br><br>
+      {% if players and players|length == 2 %}
+        <div class="match-title">
+          {{ players.0.username }} vs {{ players.1.username }}
+        </div>
 
-    {% if players and players|length == 2 %}
-        <h3>{{ players.0.username }} vs {{ players.1.username }}</h3>
-
-        <table border="0" cellpadding="8">
-            <tr>
-                <th></th>
+        <div class="score-table-wrapper">
+          <table class="score-table">
+            <thead>
+              <tr>
+                <th>Player</th>
                 <th>Set 1</th>
                 <th>Set 2</th>
                 <th>Set 3</th>
-            </tr>
-            <tr>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
                 <td>{{ players.0.username }}</td>
                 <td>{{ form.p1s1 }}</td>
                 <td>{{ form.p1s2 }}</td>
                 <td>{{ form.p1s3 }}</td>
-            </tr>
-            <tr>
+              </tr>
+
+              <tr>
                 <td>{{ players.1.username }}</td>
                 <td>{{ form.p2s1 }}</td>
                 <td>{{ form.p2s2 }}</td>
                 <td>{{ form.p2s3 }}</td>
-            </tr>
-        </table>
-    {% else %}
-        <p><em>Select a valid match</em></p>
-    {% endif %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty-match">Select a valid match</p>
+      {% endif %}
 
-    <br>
-    <button type="submit" name="save_result">Save Result</button>
+      <button type="submit" name="save_result" class="save-result-btn">
+        Save Result
+      </button>
+    </form>
 
-</form>
-
-<hr>
+  </div>
+</div>
 
 {% endblock %}

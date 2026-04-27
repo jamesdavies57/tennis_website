@@ -1,0 +1,60 @@
+/* === STAFF DASHBOARD === */
+
+.staff-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.staff-inner {
+  width: min(1000px, 100%);
+}
+
+.staff-inner h1 {
+  text-align: center;
+  font-size: clamp(28px, 3vw, 38px);
+  margin-bottom: 26px;
+}
+
+/* Grid */
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+/* Cards */
+.staff-card {
+  display: block;
+  text-decoration: none;
+
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+
+  border: 2px solid #1a614c;
+
+}
+
+
+/* Titles */
+.staff-card h3 {
+  margin-bottom: 8px;
+  color: #000;
+}
+
+/* Descriptions */
+.staff-card p {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Admin-only cards */
+.staff-card.admin {
+  border-color: #b42318;
+}
+
+/* Optional: subtle highlight on hover */
+.staff-card.admin:hover {
+  border-color: #b42318;
+}

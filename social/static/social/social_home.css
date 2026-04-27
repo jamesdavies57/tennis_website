@@ -73,7 +73,6 @@
   border-radius: 16px;
   padding: 18px;
   border: 2px solid rgba(26, 97, 76, 0.2);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 /* Title */
@@ -88,6 +87,7 @@
 
 .post-card h2 a:hover {
   color: #1a614c;
+  text-decoration: underline;
 }
 
 /* Body */
@@ -110,13 +110,5 @@
 .post-author {
   font-size: 14px;
   font-weight: 600;
-  color: #1a614c;
-}
-
-/* Empty state */
-.empty-posts {
-  text-align: center;
-  padding: 30px;
-  border: 2px dashed rgba(26, 97, 76, 0.3);
-  border-radius: 16px;
+  color: #000000;
 }

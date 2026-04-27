@@ -1,0 +1,139 @@
+/* === MATCH RESULTS PAGE === */
+
+.results-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 12px;
+}
+
+.results-card {
+  width: min(720px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 22px;
+  border: 2px solid #1a614c;
+}
+
+.staff-back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: transparent;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.staff-back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}
+
+.results-card h1 {
+  text-align: center;
+  font-size: clamp(24px, 3vw, 34px);
+  margin-bottom: 20px;
+}
+
+.results-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.results-form label {
+  font-weight: 700;
+  color: #111;
+}
+
+.results-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fff;
+}
+
+.results-form select:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+.form-error {
+  color: #b42318;
+  font-weight: 600;
+  background: rgba(180, 35, 24, 0.08);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.match-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 10px;
+  color: #000;
+}
+
+.score-table-wrapper {
+  overflow-x: auto;
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.score-table th,
+.score-table td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.score-table th {
+  color: #1a614c;
+  font-weight: 700;
+}
+
+.score-table input {
+  width: 70px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  text-align: center;
+  font-size: 14px;
+}
+
+.score-table input:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+.empty-match {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.save-result-btn {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-result-btn:hover {
+  opacity: 0.92;
+}

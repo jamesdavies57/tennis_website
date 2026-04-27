@@ -1,0 +1,62 @@
+/* === ACCOUNT DASHBOARD === */
+
+.account-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.account-inner {
+  width: min(900px, 100%);
+}
+
+.account-inner h1 {
+  text-align: center;
+  font-size: clamp(28px, 3vw, 38px);
+  margin-bottom: 26px;
+}
+
+/* Grid */
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  
+}
+
+/* Cards */
+.account-card {
+  display: block;
+  text-decoration: none;
+
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+
+  border: 2px solid rgba(26, 97, 76, 0.25);
+}
+
+
+/* Titles */
+.account-card h3 {
+  margin-bottom: 8px;
+  color: #000;
+}
+
+/* Text */
+.account-card p {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Notification badge */
+.notif-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #b42318;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}

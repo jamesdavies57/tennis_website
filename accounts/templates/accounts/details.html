@@ -1,22 +1,42 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}My details | Derby Tennis{% endblock %}
+{% block title %}My Details | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/details.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Your details</h1>
-<h2>Update your details: </h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Save changes</button>
-</form>
+<div class="details-wrapper">
+  <div class="details-card">
+    <a href="{% url 'account' %}" class="back-btn">
+    <- Go Back 
+    </a>
+    <h1>Your Details</h1>
 
-<hr>
+    <form method="post" class="details-form">
+      {% csrf_token %}
+      {{ form.as_p }}
 
-{% if user.membership_type == "PREMIUM" %}
-    <h2>Additional Info</h2>
-    <p><strong>Competitive Rank:</strong> {{ user.competitive_rank }}</p>
-{% endif %}
+      <button type="submit" class="save-btn">
+        Save Changes
+      </button>
+    </form>
+
+  </div>
+
+  {% if user.membership_type == "PREMIUM" %}
+    <div class="details-card extra-info">
+      <h2>Additional Info</h2>
+      <p>
+        <strong>Competitive Rank:</strong>
+        {{ user.competitive_rank }}
+      </p>
+    </div>
+  {% endif %}
+
+</div>
 
 {% endblock %}

@@ -1,22 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}User management | Derby Tennis{% endblock %}
+{% block title %}User Management | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/user_management_home.css' %}">
+{% endblock %}
 
 {% block content %}
 
-{% for member in members %}
-  <div>
-    <strong>{{ member.email }}</strong><br>
-    Username: {{ member.username }}<br>
-    Name: {{ member.first_name }} {{ member.last_name }}<br>
-    Membership type: {{ member.membership_type }}<br>
-    Join date: {{member.date_joined}}<br>
-    <a href="{% url 'manage_a_user' member.id %}"><button type="submit">Manage</button></a>
-    
+<div class="user-wrapper">
+  <div class="user-inner">
+
+    <a href="{% url 'staff' %}" class="back-btn">
+      <- Go Back
+    </a>
+
+    <h1>User Management</h1>
+
+    <div class="user-grid">
+      {% for member in members %}
+        <div class="user-card">
+
+          <div class="user-email">
+            {{ member.email }}
+          </div>
+
+          <div class="user-info">
+            <p><strong>Username:</strong> {{ member.username }}</p>
+            <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+            <p><strong>Membership:</strong> {{ member.membership_type|default:"-" }}</p>
+            <p><strong>Joined:</strong> {{ member.date_joined|date:"d M Y" }}</p>
+          </div>
+
+          <a href="{% url 'manage_a_user' member.id %}" class="manage-btn">
+            Manage
+          </a>
+
+        </div>
+      {% empty %}
+        <div class="empty-users">
+          <p>No members found.</p>
+        </div>
+      {% endfor %}
+    </div>
+
   </div>
-  <hr>
-{% empty %}
-  <p>No members.</p>
-{% endfor %}
+</div>
 
 {% endblock %}

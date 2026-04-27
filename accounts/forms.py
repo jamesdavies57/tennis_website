@@ -3,6 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Account
 
 class CustomUserCreationForm(UserCreationForm):
+    membership_type = forms.ChoiceField(
+        choices=Account.MEMBERSHIP_TYPES,
+        required=True
+    )
+
     class Meta:
         model = Account
         fields = ("email", "username", "first_name", "last_name", "membership_type")
@@ -20,6 +25,11 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 class UserUpdateForm(forms.ModelForm):
+    membership_type = forms.ChoiceField(
+        choices=Account.MEMBERSHIP_TYPES,
+        required=True
+    )
+
     class Meta:
         model = Account
         fields = ["username", "email", "membership_type"] 

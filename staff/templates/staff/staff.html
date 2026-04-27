@@ -1,13 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Staff | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/staff.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>Temp Staff Page</h1>
-<b><a href="{% url 'comp_results' %}">Create Result</a></b>
-<b><a href="{% url 'user_management' %}">Manage Users</a></b>
-<b><a href="{% url 'announcements' %}">Make Announcement</a></b>
-{% if user.is_superuser %}
-    <b><a href="{% url 'staff_signup' %}">Add new staff member</a></b>
-    <b><a href="{% url 'staff_management' %}">Manage Staff</a></b>
-{% endif %}
+<div class="staff-wrapper">
+  <div class="staff-inner">
+
+    <h1>Staff Dashboard</h1>
+
+    <div class="staff-grid">
+
+      <a href="{% url 'comp_results' %}" class="staff-card">
+        <h3>Create Result</h3>
+        <p>Record match results and update rankings.</p>
+      </a>
+
+      <a href="{% url 'user_management' %}" class="staff-card">
+        <h3>Manage Users</h3>
+        <p>View and manage member accounts.</p>
+      </a>
+
+      <a href="{% url 'announcements' %}" class="staff-card">
+        <h3>Make Announcement</h3>
+        <p>Post updates for all users.</p>
+      </a>
+
+      {% if user.is_superuser %}
+        <a href="{% url 'staff_signup' %}" class="staff-card admin">
+          <h3>Add Staff</h3>
+          <p>Create new staff accounts.</p>
+        </a>
+
+        <a href="{% url 'staff_management' %}" class="staff-card admin">
+          <h3>Manage Staff</h3>
+          <p>View and manage staff members.</p>
+        </a>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+
 {% endblock %}

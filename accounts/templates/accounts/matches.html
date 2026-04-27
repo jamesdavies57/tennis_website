@@ -1,66 +1,102 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Match History | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/matches.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>My Match History</h1>
-<hr>
-{% for match in matches %}
-    <div>
-        <h3>{{ match.session.court }} - {{ match.session.start_time }}</h3>
-        <h3>{{ match.player1.username }} vs {{ match.player2.username }}</h3>
+<div class="history-wrapper">
+  <div class="history-inner">
 
-        <table border="0" cellpadding="8">
-            <tr>
-                <th></th>
-                <th>Set 1</th>
-                <th>Set 2</th>
-                <th>Set 3</th>
-            </tr>
-            <tr>
-                <td>{{ match.player1.username }}</td>
-                <td>{{ match.p1s1 }}</td>
-                <td>{{ match.p1s2 }}</td>
-                <td>{{ match.p1s3 }}</td>
-            </tr>
-            <tr>
-                <td>{{ match.player2.username }}</td>
-                <td>{{ match.p2s1 }}</td>
-                <td>{{ match.p2s2 }}</td>
-                <td>{{ match.p2s3 }}</td>
-            </tr>
-        </table>
+    <a href="{% url 'account' %}" class="back-btn">
+      <- Go Back
+    </a>
+
+    <h1>My Match History</h1>
+
+    <div class="history-list">
+      {% for match in matches %}
+        <div class="match-card">
+
+          <div class="match-header">
+            <p>{{ match.session.court }}</p>
+            <p>{{ match.session.start_time|date:"d M Y H:i" }}</p>
+          </div>
+
+          <h3 class="match-title">
+            {{ match.player1.username }} vs {{ match.player2.username }}
+          </h3>
+
+          <div class="score-table-wrapper">
+            <table class="score-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Set 1</th>
+                  <th>Set 2</th>
+                  <th>Set 3</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>{{ match.player1.username }}</td>
+                  <td>{{ match.p1s1 }}</td>
+                  <td>{{ match.p1s2 }}</td>
+                  <td>{{ match.p1s3 }}</td>
+                </tr>
+                <tr>
+                  <td>{{ match.player2.username }}</td>
+                  <td>{{ match.p2s1 }}</td>
+                  <td>{{ match.p2s2 }}</td>
+                  <td>{{ match.p2s3 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Result -->
+          <div class="match-result">
+            {% if match.player1 == request.user %}
+              {% with sets=match.get_winner %}
+                {% if sets.0 > sets.1 %}
+                  <span class="result win">You won</span>
+                {% elif sets.1 > sets.0 %}
+                  <span class="result loss">You lost</span>
+                {% else %}
+                  <span class="result draw">You drew</span>
+                {% endif %}
+              {% endwith %}
+              <p>Rank Change: {{ match.p1_elo_change }}</p>
+            {% endif %}
+
+            {% if match.player2 == request.user %}
+              {% with sets=match.get_winner %}
+                {% if sets.1 > sets.0 %}
+                  <span class="result win">You won</span>
+                {% elif sets.0 > sets.1 %}
+                  <span class="result loss">You lost</span>
+                {% else %}
+                  <span class="result draw">You drew</span>
+                {% endif %}
+              {% endwith %}
+              <p>Rank Change: {{ match.p2_elo_change }}</p>
+            {% endif %}
+          </div>
+
+        </div>
+      {% empty %}
+        <div class="empty-history">
+          <p>No matches yet.</p>
+        </div>
+      {% endfor %}
     </div>
-    <br>
-    {% if match.player1 == request.user %}
-        {% with sets=match.get_winner %}
-            {% if sets.0 > sets.1 %}
-                <p>You won</p>
-            {% elif sets.1 > sets.0 %}
-                <p>You lost</p>
-            {% else %}
-                <p>You drew</p>
-            {% endif %}
-        {% endwith %}
-        Rank Change: {{ match.p1_elo_change }}</p>
-    {% endif %}
 
-
-    {% if match.player2 == request.user %}
-        {% with sets=match.get_winner %}
-            {% if sets.1 > sets.0 %}
-                <p>You won</p>
-            {% elif sets.0 > sets.1 %}
-                <p>You lost</p>
-            {% else %}
-                <p>You drew</p>
-            {% endif %}
-        {% endwith %}
-        Rank Change: {{ match.p2_elo_change }}</p>
-    {% endif %}
-
-    <hr>
-{% empty %}
-    <p>No Matches yet.</p>
-{% endfor %}
+  </div>
+</div>
 
 {% endblock %}

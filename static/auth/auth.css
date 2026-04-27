@@ -41,7 +41,7 @@
   border-color: #1a614c;
 }
 
-/* Button (reuses your style vibe) */
+/* Button  */
 .login-btn {
   margin-top: 10px;
   padding: 12px;
@@ -108,13 +108,22 @@
 }
 
 /* Inputs */
-.signup-card input {
+.signup-card input,
+.signup-card select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
   border: 2px solid #ddd;
   font-size: 14px;
+  font-family: inherit;
+  background: #fff;
   transition: border 0.15s ease;
+}
+
+.signup-card input:focus,
+.signup-card select:focus {
+  outline: none;
+  border-color: #1a614c;
 }
 
 .signup-card input:focus {
@@ -153,4 +162,21 @@
   color: #1a614c;
   font-weight: 600;
   text-decoration: none;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: transparent;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-btn:hover {
+  background: #1a614c;
+  color: #fff;
 }

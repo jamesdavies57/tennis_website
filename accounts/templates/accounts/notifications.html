@@ -1,18 +1,47 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notifications | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/notifications.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>My Notifications</h1>
+<div class="notif-wrapper">
+  <div class="notif-inner">
 
-{% for notif in notifications %}
-    <div>
-        <h2>{{ notif.title }}</h2>
-        <p>{{ notif.body }}</p>
-        <p>{{ notif.notif_type }} | {{ notif.time }}</p>
+    <a href="{% url 'account' %}" class="back-btn">
+      <- Go Back
+    </a>
+
+    <h1>My Notifications</h1>
+
+    <div class="notif-list">
+      {% for notif in notifications %}
+        <div class="notif-card">
+
+          <div class="notif-header">
+            <h2>{{ notif.title }}</h2>
+            <span class="notif-type">{{ notif.notif_type }}</span>
+          </div>
+
+          <p class="notif-body">{{ notif.body }}</p>
+
+          <p class="notif-time">
+            {{ notif.time|date:"d M Y H:i" }}
+          </p>
+
+        </div>
+      {% empty %}
+        <div class="empty-notifs">
+          <p>No notifications yet.</p>
+        </div>
+      {% endfor %}
     </div>
-    <hr>
-{% empty %}
-    <p>No notifications yet.</p>
-{% endfor %}
+
+  </div>
+</div>
 
 {% endblock %}

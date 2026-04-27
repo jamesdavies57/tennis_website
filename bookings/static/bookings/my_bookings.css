@@ -69,6 +69,23 @@
   color: #111;
 }
 
+.back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: transparent;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .my-booking-card {

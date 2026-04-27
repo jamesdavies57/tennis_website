@@ -1,38 +1,83 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}User management | Derby Tennis{% endblock %}
+{% block title %}Manage User | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/manage_users.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>Manage {{ member.username }}</h1>
+<div class="manage-user-wrapper">
+  <div class="manage-user-inner">
 
-<p>Email: {{ member.email }}</p>
-<p>Account type: {{ member.account_type }}</p>
-<p>Active: {{ member.is_active }}</p>
+    <a href="{% url 'user_management' %}" class="back-btn">
+      <- Go Back 
+    </a>
 
-<h2>Send Warning</h2>
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="action" value="warn">
-    <textarea name="warning_text" placeholder="Enter warning"></textarea>
-    <button type="submit">Send Warning</button>
-</form>
+    <h1>Manage {{ member.username }}</h1>
 
-<h2>Ban User</h2>
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="action" value="ban">
-    <button type="submit" onclick="return confirm('Ban this user?');">Ban User</button>
-</form>
+    <!-- User Info -->
+    <div class="manage-user-card">
+      <p><strong>Email:</strong> {{ member.email }}</p>
+      <p><strong>Account Type:</strong> {{ member.account_type }}</p>
+      <p><strong>Status:</strong> {{ member.is_active|yesno:"Active,Inactive" }}</p>
+    </div>
 
-{% for warning in warnings %}
-  <div>
-    <strong>{{ warning.title }} - {{ warning.time }}</strong><br>
-    {{ warning.body }}<br>
+    <!-- Actions -->
+    <div class="manage-actions">
+
+      <!-- Warning -->
+      <div class="action-card">
+        <h2>Send Warning</h2>
+
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="warn">
+
+          <textarea name="warning_text" placeholder="Enter warning..." required></textarea>
+
+          <button type="submit" class="warn-btn">
+            Send Warning
+          </button>
+        </form>
+      </div>
+
+      <!-- Ban -->
+      <div class="action-card danger">
+        <h2>Ban User</h2>
+
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="ban">
+
+          <button type="submit" class="ban-btn"
+            onclick="return confirm('Ban this user?');">
+            Ban User
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Warnings list -->
+    <div class="warnings-section">
+      <h2>Previous Warnings</h2>
+
+      {% for warning in warnings %}
+        <div class="warning-card">
+          <strong>{{ warning.title }} - {{ warning.time|date:"d M Y H:i" }}</strong>
+          <p>{{ warning.body }}</p>
+        </div>
+      {% empty %}
+        <div class="empty-warnings">
+          <p>No previous warnings for this user.</p>
+        </div>
+      {% endfor %}
+    </div>
+
   </div>
-  <hr>
-{% empty %}
-  <p>No previous warnings for this user.</p>
-{% endfor %}
+</div>
 
 {% endblock %}

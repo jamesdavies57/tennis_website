@@ -1,16 +1,28 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Staff Sign Up | Derby Tennis{% endblock %}
+{% block title %}Sign Up | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'auth/auth.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>Create an account</h1>
+<div class="signup-wrapper">
+  <div class="signup-card">
+    <h1>Create new staff account</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-</form>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
 
+      <button type="submit" class="signup-btn">Sign up</button>
+    </form>
+    <br>
+    <a href="{% url 'staff' %}" class="back-btn">
+    <- Go Back</a>
+  </div>
+</div>
 
 {% endblock %}

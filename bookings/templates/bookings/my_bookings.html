@@ -12,7 +12,9 @@
 <div class="my-bookings-wrapper">
   <div class="my-bookings-inner">
     <h1>My Upcoming Bookings</h1>
-
+    <a href="{% url 'account' %}" class="back-btn">
+    <- Go Back 
+    </a>
     {% for b in bookings %}
       <div class="my-booking-card">
         <div class="my-booking-details">

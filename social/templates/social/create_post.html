@@ -1,27 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Post | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'social/create_post.css' %}?v=2">
+{% endblock %}
 
 {% block content %}
 
-<h1>Create Post</h1>
+<div class="form-wrapper">
+  <div class="form-card">
+        
+    <a href="{% url 'social_home' %}" class="back-btn">
+    <- Go Back</a>
 
-<form method="post">
-    {% csrf_token %}
-    
-    <label for="title">Title:</label>
-    <input type="text" name="title" id="title" required>
+    <h1>Create Post</h1>
 
-    <label for="body">Body:</label>
-    <textarea name="body" id="body" required></textarea>
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" required>
 
-    <label for="post_type">Post Type:</label>
-    <select name="post_type" id="post_type">
+      <label for="body">Body</label>
+      <textarea name="body" id="body" required></textarea>
+
+      <label for="post_type">Post Type</label>
+      <select name="post_type" id="post_type">
         <option value="NEWS">News</option>
         <option value="QUESTION">Question</option>
         <option value="DISCUSSION">Discussion</option>
         <option value="OTHER">Other</option>
-    </select>
+      </select>
 
-    <button type="submit">Create Post</button>
-</form>
+      <button type="submit" class="primary-btn">
+        Create Post
+      </button>
+    </form><br>
+
+  </div>
+</div>
 
 {% endblock %}

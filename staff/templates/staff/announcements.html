@@ -1,29 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Create Announcement | Derby Tennis{% endblock %}
 
-{% block content %}
-
-<h1>Create Post</h1>
-
-<form method="post">
-    {% csrf_token %}
-    
-    <label for="notif_title">Announcement title:</label>
-    <input type="text" name="notif_title" id="notif_title" required>
-
-    <label for="notif_text">Body:</label>
-    <textarea name="notif_text" id="notif_text" required></textarea>
-
-    <label for="announcement_type">Announcement Type:</label>
-    <select name="announcement_type" id="announcement_type">
-        <option value="ALL">All members</option>
-        <option value="PREMIUM">Premium members</option>
-        <option value="STAFF">Staff</option>
-    </select>
-
-    <button type="submit">Create Announcement</button>
-</form>
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/announcements.css' %}">
 {% endblock %}
 
+{% block content %}
+
+<div class="announcement-wrapper">
+
+  <div class="announcement-card">
+    <a href="{% url 'staff' %}" class="back-btn">
+    <- Go Back</a>
+    <h1>Create Announcement</h1>
+
+    <form method="post" class="announcement-form">
+      {% csrf_token %}
+      
+      <label for="notif_title">Announcement Title</label>
+      <input type="text" name="notif_title" id="notif_title" required>
+
+      <label for="notif_text">Body</label>
+      <textarea name="notif_text" id="notif_text" required></textarea>
+
+      <label for="announcement_type">Audience</label>
+      <select name="announcement_type" id="announcement_type">
+        <option value="ALL">All Members</option>
+        <option value="PREMIUM">Premium Members</option>
+        <option value="STAFF">Staff Only</option>
+      </select>
+
+      <button type="submit" class="announcement-btn">
+        Create Announcement
+      </button>
+
+    </form><br>    
+
+  </div>
+</div>
+
+{% endblock %}

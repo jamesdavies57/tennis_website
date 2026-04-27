@@ -1,0 +1,94 @@
+/* === USER MANAGEMENT === */
+
+.user-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.user-inner {
+  width: min(1000px, 100%);
+}
+
+.user-inner h1 {
+  text-align: center;
+  font-size: clamp(26px, 3vw, 36px);
+  margin-bottom: 24px;
+}
+
+/* Grid layout */
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* User card */
+.user-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+
+  border: 2px solid rgba(26, 97, 76, 0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Email highlight */
+.user-email {
+  font-weight: 700;
+  color: #1a614c;
+  font-size: 15px;
+  word-break: break-all;
+}
+
+/* Info text */
+.user-info p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #111;
+}
+
+/* Manage button */
+.manage-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+}
+
+.manage-btn:hover {
+  opacity: 0.92;
+}
+
+/* Empty state */
+.empty-users {
+  text-align: center;
+  padding: 30px;
+  border: 2px dashed rgba(26, 97, 76, 0.3);
+  border-radius: 16px;
+}
+.back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: transparent;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}

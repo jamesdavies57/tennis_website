@@ -27,7 +27,7 @@
     <!-- Create post -->
     <div class="create-post">
       <a href="{% url 'create_post' %}" class="create-btn">
-        + Create Post
+        Create Post
       </a>
     </div>
 
@@ -55,7 +55,7 @@
           </div>
         </div>
       {% empty %}
-        <div class="empty-posts">
+        <div class="post-card">
           <p>No posts yet.</p>
         </div>
       {% endfor %}

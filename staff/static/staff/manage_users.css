@@ -1,0 +1,147 @@
+/* === MANAGE USER PAGE === */
+
+.manage-user-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.manage-user-inner {
+  width: min(500px, 100%);
+}
+
+.manage-user-inner h1 {
+  text-align: center;
+  font-size: clamp(26px, 3vw, 36px);
+  margin-bottom: 20px;
+}
+
+/* User info card */
+.manage-user-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 2px solid rgba(26, 97, 76, 0.25);
+  margin-bottom: 20px;
+}
+
+/* Actions */
+.manage-actions {
+  display: grid;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.action-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 2px solid rgba(26, 97, 76, 0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.action-card h2 {
+  margin-bottom: 10px;
+}
+
+/* Warning textarea */
+.action-card textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-family: inherit;
+}
+
+.action-card textarea:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+/* Buttons */
+.warn-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.warn-btn:hover {
+  opacity: 0.92;
+}
+
+/* Danger section */
+.action-card.danger {
+  border-color: #b42318;
+}
+
+.ban-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #b42318;
+  background: #b42318;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.ban-btn:hover {
+  opacity: 0.9;
+}
+
+/* Warnings */
+.warnings-section h2 {
+  margin-bottom: 12px;
+}
+
+.warning-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 10px;
+}
+
+.warning-card strong {
+  color: #b42318;
+}
+
+.warning-card p {
+  margin-top: 6px;
+  color: #111;
+}
+
+/* Empty state */
+.empty-warnings {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed rgba(26, 97, 76, 0.3);
+  border-radius: 12px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: transparent;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}

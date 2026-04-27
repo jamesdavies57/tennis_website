@@ -1,13 +1,15 @@
-/* === FORM PAGES (CREATE POST / COMMENT) === */
+/* === ACCOUNT DETAILS PAGE === */
 
-.form-wrapper {
+.details-wrapper {
   display: flex;
-  justify-content: center;
-  padding: 40px 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 12px;
 }
 
-
-.form-card {
+/* Card */
+.details-card {
   width: min(520px, 100%);
   background: #fff;
   border-radius: 16px;
@@ -16,70 +18,70 @@
   border: 2px solid rgba(26, 97, 76, 0.25);
 }
 
-.form-card h1 {
+/* Title */
+.details-card h1 {
+  text-align: center;
   font-size: clamp(24px, 3vw, 32px);
   margin-bottom: 18px;
 }
 
-/* Form layout */
-.styled-form {
+.details-card h2 {
+  margin-bottom: 10px;
+}
+
+/* Form */
+.details-form {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  text-align: left;
 }
 
-/* Labels */
-.styled-form label {
-  font-weight: 600;
-  color: #111;
-}
-
-/* Inputs + textarea + select */
-.styled-form input,
-.styled-form textarea,
-.styled-form select {
+/* Django form fields */
+.details-form input,
+.details-form select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
   border: 2px solid #ddd;
+  background:  #fff;
   font-size: 14px;
   font-family: inherit;
-  transition: border 0.15s ease;
 }
 
-.styled-form textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.styled-form input:focus,
-.styled-form textarea:focus,
-.styled-form select:focus {
+/* Focus */
+.details-form input:focus,
+.details-form select:focus {
   outline: none;
   border-color: #1a614c;
 }
 
 /* Button */
-.primary-btn {
+.save-btn {
   margin-top: 10px;
   padding: 12px;
   border-radius: 12px;
+
   border: 2px solid #1a614c;
   background: #1a614c;
   color: #fff;
+
   font-weight: 700;
   cursor: pointer;
-  text-align: center;
-
 }
 
-.primary-btn:hover {
+.save-btn:hover {
   opacity: 0.92;
 }
 
-.primary-btn:active {
-  transform: translateY(1px);
+/* Extra info card */
+.extra-info {
+  border-color: #1a614c;
+}
+
+/* Text */
+.details-card p {
+  font-size: 15px;
+  color: #111;
 }
 
 .back-btn {

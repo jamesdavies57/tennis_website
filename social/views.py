@@ -54,7 +54,7 @@ def create_comment(request, post_id):
             op.save()
             return redirect("view_post", post_id=post_id)
     
-    return render(request, "social/create_comment.html")
+    return redirect("view_post", post_id=post_id)
 
 @login_required
 def delete_post(request, post_id):
