@@ -1,31 +1,67 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Social | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'social/social_home.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<h1>Social Home</h1>
+<div class="social-wrapper">
+  <div class="social-inner">
 
-<h2>Filter Posts</h2>
+    <h1>Derby Tennis Social Hub</h1>
 
-<a href="{% url 'social_home' %}">All</a>
-<a href="?type=NEWS">News</a>
-<a href="?type=QUESTION">Questions</a>
-<a href="?type=DISCUSSION">Discussions</a>
-<a href="?type=OTHER">Other</a><hr> 
-<a href="?type=MINE">My Posts</a><hr> 
-<h2>Create post</h2>
-<b><a href="{% url 'create_post' %}">Create Post</a></b>
-<hr>
-<h2>Recent posts</h2>
-{% for post in posts %}
-    <div>
-        <h2><a href="{% url 'view_post' post.id %}">{{ post.title }}</a></h2>
-        <p>{{ post.body }}</p>
-        <p>{{ post.post_type }} | {{ post.upload_time }}</p>
-        <p>By: {{ post.user.username }}</p>
+    <!-- Filters -->
+    <div class="social-filters">
+      <a href="{% url 'social_home' %}">All</a>
+      <a href="?type=NEWS">News</a>
+      <a href="?type=QUESTION">Questions</a>
+      <a href="?type=DISCUSSION">Discussions</a>
+      <a href="?type=OTHER">Other</a>
+      <a href="?type=MINE">My Posts</a>
     </div>
-    <hr>
-{% empty %}
-    <p>No posts yet.</p>
-{% endfor %}
+
+    <!-- Create post -->
+    <div class="create-post">
+      <a href="{% url 'create_post' %}" class="create-btn">
+        + Create Post
+      </a>
+    </div>
+
+    <!-- Posts -->
+    <div class="posts-list">
+      {% for post in posts %}
+        <div class="post-card">
+          <h2>
+            <a href="{% url 'view_post' post.id %}">
+              {{ post.title }}
+            </a>
+          </h2>
+
+          <p class="post-body">
+            {{ post.body|truncatewords:25 }}
+          </p>
+
+          <div class="post-meta">
+            <span>{{ post.post_type }}</span>
+            <span>{{ post.upload_time }}</span>
+          </div>
+
+          <div class="post-author">
+            By {{ post.user.username }}
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-posts">
+          <p>No posts yet.</p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
 
 {% endblock %}

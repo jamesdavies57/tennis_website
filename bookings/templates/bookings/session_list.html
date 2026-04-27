@@ -4,7 +4,7 @@
 {% block title %}{{ session_type }} Sessions | Derby Tennis{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'bookings/session_list.css' %}">
+<link rel="stylesheet" href="{% static 'bookings/session_list2.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
   <div class="sessions-inner">
     <h1>{{session_type}} Sessions</h1>
 
-    <a href="{% url 'booking:booking' %}" class="back-btn">
+    <a href="{% url 'booking:booking' %}" class="session-back-btn">
       <- Back to Bookings
     </a>
     <form method="get" class="session-filter">

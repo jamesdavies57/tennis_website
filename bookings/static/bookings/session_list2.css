@@ -17,6 +17,25 @@
   color: #000;
 }
 
+
+.session-back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.session-back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}
+
+
+
 .session-filter {
   display: flex;
   justify-content: center;
@@ -115,30 +134,7 @@
   color: #111;
 }
 
-.back-btn {
-  display: inline-block;
-  margin-bottom: 16px;
 
-  padding: 10px 14px;
-  border-radius: 10px;
-
-  border: 2px solid #1a614c;
-  background: transparent;
-
-
-  text-decoration: none;
-  font-weight: 700;
-
-  transition: opacity 0.15s ease, transform 0.05s ease;
-}
-
-.back-btn:hover {
-  opacity: 0.9;
-}
-
-.back-btn:active {
-  transform: translateY(1px);
-}
 
 /* Mobile */
 @media (max-width: 768px) {

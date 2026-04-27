@@ -1,0 +1,107 @@
+/* === VIEW POST PAGE === */
+
+.post-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 12px;
+}
+
+.post-inner {
+  width: min(800px, 100%);
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  color: #1a614c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-btn:hover {
+  background: #1a614c;
+  color: #fff;
+}
+
+.single-post-card,
+.comment-form-card,
+.comment-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 2px solid rgba(26, 97, 76, 0.2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.single-post-card h1 {
+  font-size: clamp(26px, 3vw, 36px);
+  margin-bottom: 12px;
+}
+
+.single-post-body {
+  line-height: 1.7;
+  color: #111;
+  margin-bottom: 14px;
+}
+
+.delete-btn,
+.delete-comment-btn {
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 2px solid #b42318;
+  background: transparent;
+  color: #b42318;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-btn:hover,
+.delete-comment-btn:hover {
+  opacity: 0.85;
+}
+
+.comment-form-card h2,
+.comments-section h2 {
+  margin-bottom: 12px;
+}
+
+.comment-form-card textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.comment-form-card textarea:focus {
+  outline: none;
+  border-color: #1a614c;
+}
+
+.comment-btn {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #1a614c;
+  background: #1a614c;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comment-card p {
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.comment-card small {
+  color: #555;
+}
