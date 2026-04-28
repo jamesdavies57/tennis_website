@@ -1,4 +1,3 @@
-/* === STAFF DASHBOARD === */
 
 .staff-wrapper {
   display: flex;
@@ -51,10 +50,5 @@
 
 /* Admin-only cards */
 .staff-card.admin {
-  border-color: #b42318;
-}
-
-/* Optional: subtle highlight on hover */
-.staff-card.admin:hover {
   border-color: #b42318;
 }

@@ -14,12 +14,12 @@
     <h1>{{session_type}} Sessions</h1>
 
     <a href="{% url 'booking:booking' %}" class="session-back-btn">
-      <- Back to Bookings
+      <- Go Back
     </a>
     <form method="get" class="session-filter">
       <label for="date">Date:</label>
       <input type="date" id="date" name="date" value="{{ date }}">
-      <button type="submit">Show</button>
+      <button type="submit">Show Sessions</button>
     </form>
 
         <div class="sessions-grid">
