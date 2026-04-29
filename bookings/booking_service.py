@@ -3,6 +3,7 @@ from django.db import transaction
 from django.utils import timezone
 from .models import Booking
 from accounts.models import Notification
+
 #extra logic to help to create bookings
 
 #can be tweaked later

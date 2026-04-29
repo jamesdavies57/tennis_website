@@ -22,7 +22,7 @@ class Session(models.Model):
     start_time = models.DateTimeField()
     is_cancelled = models.BooleanField(default=False)
 
-    #using properties allows data to be called later without being stored
+    #using properties allows data to be called later without being stored for ease of use
     @property
     def end_time(self):
         return self.start_time + timedelta(hours=1)

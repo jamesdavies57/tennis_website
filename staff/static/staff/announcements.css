@@ -20,7 +20,7 @@
   margin-bottom: 18px;
 }
 
-/* Form layout */
+
 .announcement-form {
   display: flex;
   flex-direction: column;
@@ -28,7 +28,6 @@
   text-align: left;
 }
 
-/* Labels */
 .announcement-form label {
   font-weight: 700;
   color: #111;

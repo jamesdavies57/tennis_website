@@ -1,4 +1,4 @@
-/* image */
+
     .image {
       width: 100%;
       height: clamp(240px, 55vh, 560px);
@@ -44,7 +44,7 @@
     .who-we-are {
         margin-top: 28px;
         padding-top: 22px;
-        border-top: 2px solid rgba(26, 97, 76, 0.25); 
+        border-top: 2px solid #1a614c; 
         text-align: center;
         }
 

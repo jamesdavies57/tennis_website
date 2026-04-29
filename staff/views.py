@@ -110,6 +110,7 @@ def announcements(request):
         return redirect("announcements")
     return render(request, "staff/announcements.html")
 
+@login_required
 def staff_signup(request):
     if request.user.is_superuser == True:
         if request.method == "POST":
