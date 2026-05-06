@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Generate Sessions | Derby Tennis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'staff/generate_sessions.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="generate-wrapper">
+  <div class="generate-card">
+
+    <a href="{% url 'staff' %}" class="back-btn">
+      <- Back to Staff
+    </a>
+
+    <h1>Generate Court Sessions</h1>
+
+
+    <form method="post" class="generate-form">
+      {% csrf_token %}
+
+      <label for="start_date">Start Date</label>
+      <input type="date" name="start_date" id="start_date">
+
+      <label for="weeks">Number of Weeks</label>
+      <input type="number" name="weeks" id="weeks" value="4" min="1">
+
+      <label for="start_hour">Start Hour</label>
+      <input type="number" name="start_hour" id="start_hour" value="9" min="0" max="23">
+
+      <label for="end_hour">End Hour</label>
+      <input type="number" name="end_hour" id="end_hour" value="21" min="1" max="24">
+
+      <button type="submit" class="generate-btn">
+        Generate Sessions
+      </button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

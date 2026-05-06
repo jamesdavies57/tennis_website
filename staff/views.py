@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import CompForm, StaffCreationForm
 from bookings.models import Session
 from accounts.models import Account, Notification
+from .service import generate_court_sessions
+from datetime import datetime
 
 @login_required
 def staff_view(request):
@@ -160,3 +162,29 @@ def manage_a_staff(request, user_id):
         return redirect("manage_a_staff", user_id=member.id)
 
     return render(request, "staff/manage_a_staff.html", {"member": member, "warnings": warnings})
+
+
+@login_required
+def generate_sessions_view(request):
+    if request.user.is_superuser != True:
+        return redirect("home")
+    if request.method == "POST":
+        weeks = int(request.POST.get("weeks", 4))
+        start_hour = int(request.POST.get("start_hour", 9))
+        end_hour = int(request.POST.get("end_hour", 21))
+        start_date_str = request.POST.get("start_date")
+
+        if start_date_str:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+        else:
+            start_date = None
+
+        created = generate_court_sessions(
+            weeks=weeks,
+            start_hour=start_hour,
+            end_hour=end_hour,
+            start_date=start_date,
+        )
+        return redirect("generate_sessions")
+
+    return render(request, "staff/generate_sessions.html")

@@ -10,5 +10,6 @@ urlpatterns = [
     path("staffsignup/", views.staff_signup, name="staff_signup"),
     path("staffmanagement/", views.staff_management, name="staff_management"),
     path("manageastaff<int:user_id>/", views.manage_a_staff, name="manage_a_staff"),
+    path("generatesessions/", views.generate_sessions_view, name="generate_sessions"),
 ]
 
