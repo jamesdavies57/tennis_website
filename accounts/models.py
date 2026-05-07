@@ -32,13 +32,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
         ("MEMBER", "Member"),
         ("STAFF", "Staff"),
     ]
-
     MEMBERSHIP_STATUS = [
         ("ACTIVE", "Active"),
         ("PAUSED", "Paused"),
         ("CANCELLED", "Cancelled"),
     ]
-
     MEMBERSHIP_TYPES = [
         ("CASUAL", "Casual"),
         ("PREMIUM", "Premium"),
@@ -46,11 +44,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     #Fields
     id = models.BigAutoField(primary_key=True)
-
     email = models.EmailField(unique=True)
-
     username = models.CharField(max_length=30, unique=True)
-
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
 
@@ -59,24 +54,19 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     #Membership info (can be blank for staff)
     membership_type = models.CharField(max_length=20,choices=MEMBERSHIP_TYPES,null=True,blank=True,)
-
     membership_status = models.CharField(max_length=20,choices=MEMBERSHIP_STATUS,null=True,blank=True,default="ACTIVE")
-
     competitive_rank = models.PositiveIntegerField(null=True,blank=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     date_joined = models.DateTimeField(default=timezone.now)
-
     unread_notifs = models.PositiveIntegerField(default=0)
-
     objects = AccountManager()
 
-    #set username to email as login, despite having a username field
+    #set Django "username" to email as it is used for logging in
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "first_name", "last_name"]
-
     def __str__(self):
         return self.username
     
