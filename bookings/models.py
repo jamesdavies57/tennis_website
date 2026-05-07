@@ -74,7 +74,6 @@ class Comp_results(models.Model):
 
     session = models.ForeignKey(Session,on_delete=models.CASCADE,related_name="results", null=True, blank=True)
 
-    booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name="comp_booking")
     player1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_1")
     player2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comp_player_2")
 

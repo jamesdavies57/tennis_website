@@ -22,13 +22,13 @@ class CompForm(forms.ModelForm):
             "p1s2", "p2s2",
             "p1s3", "p2s3",
         ]
-        def clean_session(self):
-            session = self.cleaned_data.get("session")
+    def clean_session(self):
+        session = self.cleaned_data.get("session")
 
-            if session and hasattr(session, "result"):
-                raise forms.ValidationError("A result already exists for this session.")
+        if session and hasattr(session, "result"):
+            raise forms.ValidationError("A result already exists for this session.")
 
-            return session
+        return session
     
 class StaffCreationForm(UserCreationForm):
     class Meta:

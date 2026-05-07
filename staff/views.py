@@ -41,7 +41,6 @@ def comp_results(request):
             result.session = session
             result.player1 = players[0]
             result.player2 = players[1]
-            result.booking = bookings.first()
             result.recorded_by = request.user
             result.save()
             return redirect("comp_results")
