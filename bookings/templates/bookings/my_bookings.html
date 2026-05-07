@@ -27,13 +27,15 @@
             <p>Casual session</p>
           {% endif %}
         </div>
-
+        
+      {%if b.session.session_type == "CASUAL"%}
         <form method="post" action="{% url 'booking:cancel_my_booking' b.id %}">
           {% csrf_token %}
           <button type="submit" class="cancel-booking-btn" onclick="return confirm('Cancel this session?');">
             Cancel
           </button>
         </form>
+      {%endif%}
       </div>
     {% empty %}
       <div class="empty-bookings">
