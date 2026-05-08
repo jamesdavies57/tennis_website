@@ -35,6 +35,7 @@ class Session(models.Model):
     def max_players(self):
         return self.court.max_players
     
+    # display session information: name, player count and time
     def __str__(self):
         bookings = self.bookings.all()
 
@@ -98,81 +99,67 @@ class Comp_results(models.Model):
     def __str__(self):
         return f"{self.session.court} {self.session.start_time}: {self.player1.email} vs {self.player2.email}"
     
-
-    #calculate rank updates based on elo
     
-    #only update ranks the first time the match is recorded, edge case protection
+    
     def save(self, *args, **kwargs):
         is_new = self.pk is None
-
         super().save(*args, **kwargs)
-
+        #only update ranks the first time the match is recorded
         if is_new:
             self.update_ranks()
 
-    #function to use in the webpage to return the winner
     def get_winner(self):
         p1_sets = 0
         p2_sets = 0
-
-        sets = [
-            (self.p1s1, self.p2s1),
-            (self.p1s2, self.p2s2),
-            (self.p1s3, self.p2s3),
-        ]
-
-        for s1, s2 in sets:
-            if s1 is None or s2 is None:
-                continue
-            if s1 > s2:
+        #count sets won, skip if set wasnt played
+        if self.p1s1 > self.p2s1:
+            p1_sets += 1
+        else:
+            p2_sets += 1
+        if self.p1s2 > self.p2s2:
+            p1_sets += 1
+        else:
+            p2_sets += 1
+        if self.p1s3 is not None and self.p2s3 is not None:
+            if self.p1s3 > self.p2s3:
                 p1_sets += 1
-            elif s2 > s1:
+            else:
                 p2_sets += 1
-
         return p1_sets, p2_sets
+
 
     #calculate elo and update
     def update_ranks(self):
-        #elo K value
-        K = 32
-        #shorten variable names to make it easier
         p1 = self.player1
         p2 = self.player2
+        p1_sets, p2_sets = self.get_winner()
 
-        #get ranks
+        if p1_sets == p2_sets:
+            return
+
+        #work out who won
+        if p1_sets > p2_sets:
+            p1_win, p2_win = 1, 0
+        else:
+            p1_win, p2_win = 0, 1
+
         r1 = p1.competitive_rank
         r2 = p2.competitive_rank
 
-        #determine winner
-        p1_sets, p2_sets = self.get_winner()
-        
+        #calculate how likely each player was to win based on rank difference
+        p1_expected = 1 / (1 + 10 ** ((r2 - r1) / 400))
+        p2_expected = 1 / (1 + 10 ** ((r1 - r2) / 400))
 
-        if p1_sets == p2_sets:
-            return  # no change for draw
+        #update ranks
+        new_r1 = r1 + 32 * (p1_win - p1_expected)
+        new_r2 = r2 + 32 * (p2_win - p2_expected)
 
-        #actual scores (win or lose)
-        if p1_sets > p2_sets:
-            S1, S2 = 1, 0
-        else:
-            S1, S2 = 0, 1
-
-        #expected scores (elo prediction algorithm)
-        E1 = 1 / (1 + 10 ** ((r2 - r1) / 400))
-        E2 = 1 / (1 + 10 ** ((r1 - r2) / 400))
-
-        #new ratings
-        new_r1 = r1 + K * (S1 - E1)
-        new_r2 = r2 + K * (S2 - E2)
-
-        self.p1_elo_change = round(new_r1-r1)
-        self.p2_elo_change = round(new_r2-r2)
-
-        #save the elo changes only
+        self.p1_elo_change = round(new_r1 - r1)
+        self.p2_elo_change = round(new_r2 - r2)
         self.save(update_fields=["p1_elo_change", "p2_elo_change"])
 
-        # update players
         p1.competitive_rank = round(new_r1)
         p2.competitive_rank = round(new_r2)
-
         p1.save()
         p2.save()
+

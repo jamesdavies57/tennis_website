@@ -169,8 +169,8 @@ def generate_sessions_view(request):
         return redirect("home")
     if request.method == "POST":
         weeks = int(request.POST.get("weeks", 4))
-        start_hour = int(request.POST.get("start_hour", 9))
-        end_hour = int(request.POST.get("end_hour", 21))
+        start_hour = int(request.POST.get("start_hour", 10))
+        end_hour = int(request.POST.get("end_hour", 22))
         start_date_str = request.POST.get("start_date")
 
         if start_date_str:

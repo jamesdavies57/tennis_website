@@ -16,23 +16,23 @@ def _active_bookings(session):
 def create_booking(*, user, session):
     #validate sessions not been cancelled
     if session.is_cancelled:
-        raise ValidationError("This session has been cancelled.")
+        raise ValidationError("This session is cancelled")
 
     #check capacity
     active = _active_bookings(session)
     if active.count() >= session.max_players:
-        raise ValidationError("This session is full.")
+        raise ValidationError("This session is full")
 
     #prevent duplicate bookings
     if Booking.objects.filter(user=user, session=session, cancelled_at__isnull=True).exists():
-        raise ValidationError("You are already booked into this session.")
+        raise ValidationError("You are already booked into this session")
 
     #competitive rules
     if session.session_type == "COMPETITIVE":
         if user.membership_status != "ACTIVE":
-            raise ValidationError("Your membership is not active.")
+            raise ValidationError("Your do not have a membership")
         if user.competitive_rank is None:
-            raise ValidationError("You do not have a competitive rank.")
+            raise ValidationError("You do not have a rank")
 
         #player ranks must be within difference
         for booking in active:
@@ -72,9 +72,9 @@ def create_booking(*, user, session):
 def cancel_booking(*, user, booking):
     #only staff and the user that created the booking can cancel
     if booking.user_id != user.id and not user.is_staff:
-        raise ValidationError("You cannot cancel this booking.")
+        raise ValidationError("You cannot cancel this booking")
     if booking.cancelled_at is not None:
-        raise ValidationError("Booking is already cancelled.")
+        raise ValidationError("Booking is already cancelled")
     booking.cancelled_at = timezone.now()
     booking.save(update_fields=["cancelled_at"])
     return booking

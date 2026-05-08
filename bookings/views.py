@@ -48,6 +48,7 @@ def casual_sessions(request):
                     .filter(active_bookings__lt=F("court__max_players"))
                     .exclude(bookings__user=request.user,bookings__cancelled_at__isnull=True)
                     .order_by("start_time"))
+    #get courts for casual sessions
     courts = Court.objects.filter(court_type="CASUAL").order_by("name")
 
     return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "Casual","date": date_str,"courts": courts})
@@ -79,6 +80,8 @@ def competitive_sessions(request):
     else:
         #if user has no rank, dont show competitive sessions
         get_sessions = get_sessions.none()
+
+    #get competitive court objects
     courts = Court.objects.filter(court_type="COMPETITIVE").order_by("name")
 
     return render(request, "bookings/session_list.html", {"sessions": get_sessions,"session_type": "Competitive", "date": date_str,"courts": courts})
