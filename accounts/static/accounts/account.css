@@ -15,7 +15,6 @@
   margin-bottom: 26px;
 }
 
-/* Grid */
 .account-grid {
   display: grid;
   justify-content: center;
@@ -23,7 +22,6 @@
   gap: 18px;
 }
 
-/* Cards */
 .account-card {
   display: block;
   text-decoration: none;
@@ -36,19 +34,16 @@
 }
 
 
-/* Titles */
 .account-card h3 {
   margin-bottom: 8px;
   color: #000;
 }
 
-/* Text */
 .account-card p {
   font-size: 14px;
   color: #444;
 }
 
-/* Notification badge */
 .notif-badge {
   display: inline-block;
   margin-left: 6px;

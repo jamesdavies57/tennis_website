@@ -1,4 +1,4 @@
-/* Login container */
+
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -12,21 +12,20 @@
   text-align: center;
 }
 
-/* Title */
+
 .login-card h1 {
   font-size: clamp(24px, 3vw, 32px);
   margin-bottom: 16px;
   color: #000;
 }
 
-/* Form styling */
 .login-card form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* Inputs */
+
 .login-card input {
   width: 100%;
   padding: 10px 12px;
@@ -41,7 +40,7 @@
   border-color: #1a614c;
 }
 
-/* Button  */
+
 .login-btn {
   margin-top: 10px;
   padding: 12px;
@@ -62,7 +61,7 @@
   transform: translateY(1px);
 }
 
-/* Signup link */
+
 .login-extra {
   margin-top: 16px;
   font-size: 14px;
@@ -74,11 +73,6 @@
   text-decoration: none;
 }
 
-
-
-/* SIGNUP SECTION */
-
-/* reuse login wrapper + card */
 .signup-wrapper {
   display: flex;
   justify-content: center;
@@ -93,21 +87,21 @@
   text-align: center;
 }
 
-/* Title */
+
 .signup-card h1 {
   font-size: clamp(24px, 3vw, 32px);
   margin-bottom: 16px;
   color: #000;
 }
 
-/* Form layout */
+
 .signup-card form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* Inputs */
+
 .signup-card input,
 .signup-card select {
   width: 100%;
@@ -131,7 +125,7 @@
   border-color: #1a614c;
 }
 
-/* Button */
+
 .signup-btn {
   margin-top: 10px;
   padding: 12px;
@@ -152,7 +146,7 @@
   transform: translateY(1px);
 }
 
-/* Bottom link */
+
 .signup-extra {
   margin-top: 16px;
   font-size: 14px;

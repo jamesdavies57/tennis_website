@@ -22,7 +22,6 @@ class Session(models.Model):
     start_time = models.DateTimeField()
     is_cancelled = models.BooleanField(default=False)
 
-    #using properties allows data to be called later without being stored for ease of use
     @property
     def end_time(self):
         return self.start_time + timedelta(hours=1)
@@ -35,7 +34,6 @@ class Session(models.Model):
     def max_players(self):
         return self.court.max_players
     
-    # display session information: name, player count and time
     def __str__(self):
         bookings = self.bookings.all()
 
@@ -59,7 +57,7 @@ class Booking(models.Model):
 
     date_created = models.DateTimeField(default=timezone.now)
     cancelled_at = models.DateTimeField(null=True, blank=True)
-    #is_cancelled can be called later to find if session has been cancelled 
+     
     @property
     def is_cancelled(self):
         return self.cancelled_at is not None
@@ -162,4 +160,3 @@ class Comp_results(models.Model):
         p2.competitive_rank = round(new_r2)
         p1.save()
         p2.save()
-

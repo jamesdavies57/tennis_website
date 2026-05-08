@@ -24,7 +24,7 @@ def generate_court_sessions(weeks=4, start_hour=10, end_hour=22, start_date=None
         for court in courts:
             for hour in range(start_hour, end_hour):
                 dt = timezone.make_aware(datetime.combine(day, time(hour, 0)))
-                #create new session, use get_or_create to avoid duplicates
+                #create new session
                 _, was_created = Session.objects.get_or_create(court=court,start_time=dt)
                 if was_created:
                     created += 1

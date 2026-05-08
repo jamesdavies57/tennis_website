@@ -14,7 +14,7 @@
       object-fit: cover;
       object-position: center;
     }
-    /* info */
+  
     .home-info {
       display: flex;
       justify-content: center;
@@ -61,7 +61,6 @@
         color: #111;
     }
 
-    /* Buttons */
     .home-actions {
       display: flex;
       gap: 12px;
@@ -92,7 +91,7 @@
       transform: translateY(1px);
     }
 
-    /* Mobile adjustments */
+
     @media (max-width: 768px) {
       .image {
         height: clamp(220px, 42vh, 420px);

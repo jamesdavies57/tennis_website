@@ -15,14 +15,14 @@
   margin-bottom: 26px;
 }
 
-/* Grid */
+
 .staff-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
 }
 
-/* Cards */
+
 .staff-card {
   display: block;
   text-decoration: none;
@@ -35,14 +35,12 @@
 
 }
 
-
-/* Titles */
 .staff-card h3 {
   margin-bottom: 8px;
   color: #000;
 }
 
-/* Descriptions */
+
 .staff-card p {
   font-size: 14px;
   color: #444;

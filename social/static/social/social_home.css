@@ -9,14 +9,12 @@
   width: min(800px, 100%);
 }
 
-/* Title */
 .social-inner h1 {
   text-align: center;
   font-size: clamp(26px, 3vw, 36px);
   margin-bottom: 20px;
 }
 
-/* Filters */
 .social-filters {
   display: flex;
   flex-wrap: wrap;
@@ -39,7 +37,6 @@
   color: #fff;
 }
 
-/* Create post */
 .create-post {
   text-align: center;
   margin-bottom: 24px;
@@ -59,14 +56,12 @@
   opacity: 0.9;
 }
 
-/* Posts list */
 .posts-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Post card */
 .post-card {
   background: #fff;
   border-radius: 16px;
@@ -74,7 +69,6 @@
   border: 2px solid #1a614c;
 }
 
-/* Title */
 .post-card h2 {
   margin-bottom: 8px;
 }
@@ -89,14 +83,12 @@
   text-decoration: underline;
 }
 
-/* Body */
 .post-body {
   margin-bottom: 10px;
   color: #111;
   line-height: 1.5;
 }
 
-/* Meta */
 .post-meta {
   display: flex;
   gap: 12px;
@@ -105,7 +97,6 @@
   margin-bottom: 6px;
 }
 
-/* Author */
 .post-author {
   font-size: 14px;
   font-weight: 600;

@@ -18,17 +18,15 @@
 
     <h1>Manage {{ member.username }}</h1>
 
-    <!-- User Info -->
+
     <div class="manage-user-card">
       <p><strong>Email:</strong> {{ member.email }}</p>
       <p><strong>Account Type:</strong> {{ member.account_type }}</p>
       <p><strong>Status:</strong> {{ member.is_active|yesno:"Active,Inactive" }}</p>
     </div>
 
-    <!-- Actions -->
     <div class="manage-actions">
 
-      <!-- Warning -->
       <div class="action-card">
         <h2>Send Warning</h2>
 
@@ -44,7 +42,6 @@
         </form>
       </div>
 
-      <!-- Ban -->
       <div class="action-card danger">
         <h2>Remove staff member</h2>
 
@@ -61,7 +58,6 @@
 
     </div>
 
-    <!-- Warnings list -->
     <div class="warnings-section">
       <h2>Previous Warnings</h2>
 

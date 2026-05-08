@@ -14,7 +14,6 @@
 
     <h1>Derby Tennis Social Hub</h1>
 
-    <!-- Filters -->
     <div class="social-filters">
       <a href="{% url 'social_home' %}">All</a>
       <a href="?type=NEWS">News</a>
@@ -24,14 +23,12 @@
       <a href="?type=MINE">My Posts</a>
     </div>
 
-    <!-- Create post -->
     <div class="create-post">
       <a href="{% url 'create_post' %}" class="create-btn">
         Create Post
       </a>
     </div>
 
-    <!-- Posts -->
     <div class="posts-list">
       {% for post in posts %}
         <div class="post-card">

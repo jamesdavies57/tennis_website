@@ -20,7 +20,6 @@
   margin-bottom: 18px;
 }
 
-/* Form layout */
 .styled-form {
   display: flex;
   flex-direction: column;
@@ -28,13 +27,11 @@
   text-align: left;
 }
 
-/* Labels */
 .styled-form label {
   font-weight: 600;
   color: #111;
 }
 
-/* Inputs + textarea + select */
 .styled-form input,
 .styled-form textarea,
 .styled-form select {
@@ -59,7 +56,7 @@
   border-color: #1a614c;
 }
 
-/* Button */
+
 .primary-btn {
   margin-top: 10px;
   padding: 12px;
